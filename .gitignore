@@ -59,3 +59,7 @@ typings/
 
 # next.js build output
 .next
+
+# exclude personal data
+auth.json
+data.json
