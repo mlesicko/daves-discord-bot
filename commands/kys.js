@@ -1,6 +1,7 @@
 const auth = require('../auth.json');
 
-const run = (messageText, { sendMessage }, message) => {
+const run = ({messageText, actions, message}) => {
+	const {sendMessage} = actions;
 	if (messageText === 'kill yourself' || messageText === 'kys') {
 		if (auth.owners.includes(message.author.id)) {
 			exit(sendMessage);

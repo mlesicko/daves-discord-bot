@@ -6,9 +6,9 @@ const commandArray = [
 	oldTownRoad
 ];
 
-const run = (messageText, actions, message) => {
+const run = (state) => {
 	const selection = commandArray.find(
-		(f) => f(messageText, actions, message)
+		(f) => f(state)
 	);
 	if (selection) {
 		return true;

@@ -1,5 +1,6 @@
-const run = (message, { react }) => {
-	if (message.toLowerCase().includes('old town road')) {
+const run = ({messageText, actions}) => {
+	const {react} = actions;
+	if (messageText.toLowerCase().includes('old town road')) {
 		react('🤠');
 		return true;
 	} else {
