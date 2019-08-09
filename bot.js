@@ -1,10 +1,14 @@
 const Discord = require('discord.js');
+const { JsonDB } = require('node-json-db');
+const { Config } = require('node-json-db/dist/lib/JsonDBConfig');
 const auth = require('./auth.json');
 const selfDirectedActions = require('./actions/index.js');
 const commands = require('./commands/index.js');
 
 //initialize Discord Bot
 const client = new Discord.Client();
+const db = new JsonDB(new Config('data', true, true, '/'));
+
 let muted = false;
 
 client.on('ready', () => {
@@ -27,7 +31,12 @@ client.on('message', (message) => {
 				muted = false;
 				message.channel.send('I\'m here!');
 			} else {
-				commands(messageText, actions, message);
+				commands({
+					messageText, 
+					actions, 
+					message,
+					db
+				});
 			}
 		}
 	} else {
@@ -35,7 +44,12 @@ client.on('message', (message) => {
 			sendMessage: muted ? (_) => {} : (s) => message.channel.send(s),
 			react: muted ? (_) => {} : (s) => message.react(s)
 		}
-		selfDirectedActions(message.content, actions, message);
+		selfDirectedActions({
+			messageText: message.content, 
+			actions, 
+			message,
+			db
+		});
 	}
 });
 

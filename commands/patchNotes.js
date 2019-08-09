@@ -1,4 +1,5 @@
-const run = (messageText, { sendMessage }) => {
+const run = ({messageText, actions}) => {
+	const {sendMessage} = actions;
 	if (['whatsnew', 'whatsup', 'sup'].includes(
 		messageText.toLowerCase().replace(/[^a-z]/g, '')
 	)) {
@@ -11,6 +12,9 @@ const run = (messageText, { sendMessage }) => {
 }
 
 const patchNotes = 
+	'8/08/19:\n' +
+	'• Improved database logic.\n' +
+	'• Fix for exploding head 69 bug.\n' +
 	'8/03/19:\n' +
 	'• Added names command.\n' +
 	'• Added report bug command.\n' +
