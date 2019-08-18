@@ -1,7 +1,9 @@
 const sixtyNine = require('./sixtyNine.js');
 const oldTownRoad = require('./oldTownRoad.js');
+const shame = require('./shame.js');
 
 const commandArray = [
+	shame,
 	sixtyNine,
 	oldTownRoad
 ];
