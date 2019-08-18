@@ -17,12 +17,12 @@ client.on('ready', () => {
 
 client.on('message', (message) => {
 
+	const myId = client.user.id;
 	if (message.mentions.users.size) {
 		const actions = {
 			sendMessage: (s) => message.channel.send(s),
 			react: (s) => message.react(s)
 		}
-		const myId = client.user.id;
 		if (message.mentions.users.has(myId)) {
 			const messageText = message.content.replace(`<@${myId}>`,"").trim();
 			if (messageText === "mute" || messageText === "shutup" || messageText === "shut up") {
@@ -35,7 +35,8 @@ client.on('message', (message) => {
 					messageText, 
 					actions, 
 					message,
-					db
+					db,
+					myId
 				});
 			}
 		}
@@ -48,7 +49,8 @@ client.on('message', (message) => {
 			messageText: message.content, 
 			actions, 
 			message,
-			db
+			db,
+			myId 
 		});
 	}
 });

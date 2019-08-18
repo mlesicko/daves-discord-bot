@@ -17,6 +17,8 @@ const helpMessage =
 	'@ name\n' +
 	'@ add name\n' +
 	'@ report bug\n' +
+	'@ shame\n' +
+	'@ unshame\n' +
 	'@ what\'s new';
 
 

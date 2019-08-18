@@ -12,6 +12,8 @@ const run = ({messageText, actions}) => {
 }
 
 const patchNotes = 
+	'8/18/09:\n' +
+	'• Shame command added.\n' +
 	'8/08/19:\n' +
 	'• Improved database logic.\n' +
 	'• Fix for exploding head 69 bug.\n' +
