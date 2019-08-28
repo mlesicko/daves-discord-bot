@@ -1,7 +1,7 @@
-const run = ({actions, message, db}) => {
-	const { react, sendMessage } = actions;
+const run = ({react, sendMessage, message, db}) => {
 	const userId = message.author.id;
-	if (getShamedUsers(db).includes(userId)) {
+	const channelId = message.channel.id;
+	if (getShamedUsers(channelId, db).includes(userId)) {
 		shame(sendMessage, react);
 		return true;
 	} else {
@@ -28,9 +28,9 @@ const shame = (sendMessage, react) => {
 	responses[getRandInt(responses.length)]();
 }
 		
-const getShamedUsers = (db) => {
+const getShamedUsers = (channelId, db) => {
 	try {
-		return db.getData('/shame').map(user => user.id);
+		return db.getData('/shame/' + channelId).map(user => user.id);
 	} catch (e) {
 		return [];
 	}

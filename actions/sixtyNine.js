@@ -1,5 +1,4 @@
-const run = ({messageText, actions}) => {
-	const {sendMessage} = actions;
+const run = ({messageText, sendMessage}) => {
 	// Fix for issue displaying response to invisible 69s.
 	const cleanText = messageText.replace(/<[^>]*>/g, '');
 	if (cleanText.includes('69')) {

@@ -18,6 +18,10 @@ client.on('ready', () => {
 client.on('message', (message) => {
 
 	const myId = client.user.id;
+	if (message.author.id === myId) {
+		return;
+	}
+
 	if (message.mentions.users.size) {
 		const actions = {
 			sendMessage: (s) => message.channel.send(s),
@@ -33,7 +37,7 @@ client.on('message', (message) => {
 			} else {
 				commands({
 					messageText, 
-					actions, 
+					...actions, 
 					message,
 					db,
 					myId
@@ -47,7 +51,7 @@ client.on('message', (message) => {
 		}
 		selfDirectedActions({
 			messageText: message.content, 
-			actions, 
+			...actions, 
 			message,
 			db,
 			myId 

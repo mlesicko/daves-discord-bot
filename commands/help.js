@@ -1,5 +1,4 @@
-const run = ({messageText, actions}) => {
-	const {sendMessage} = actions;
+const run = ({messageText, sendMessage}) => {
 	if (messageText === 'help') {
 		sendMessage(helpMessage);
 		return true;
