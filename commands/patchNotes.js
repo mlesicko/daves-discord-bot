@@ -1,5 +1,4 @@
-const run = ({messageText, actions}) => {
-	const {sendMessage} = actions;
+const run = ({messageText, sendMessage}) => {
 	if (['whatsnew', 'whatsup', 'sup'].includes(
 		messageText.toLowerCase().replace(/[^a-z]/g, '')
 	)) {
@@ -12,7 +11,10 @@ const run = ({messageText, actions}) => {
 }
 
 const patchNotes = 
-	'8/18/09:\n' +
+	'8/28/19:\n' +
+	'• Shaming is channel-specific.\n' +
+	'• Bot no longer talks to itself.\n' +
+	'8/18/19:\n' +
 	'• Shame command added.\n' +
 	'8/08/19:\n' +
 	'• Improved database logic.\n' +

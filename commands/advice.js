@@ -1,5 +1,4 @@
-const run = ({messageText, actions, db}) => {
-	const { sendMessage } = actions;
+const run = ({messageText, sendMessage, db}) => {
 	const tokens = messageText.split(' ');
 	if (tokens.length === 1 && tokens[0] === 'advice') {
 		getAdvice(sendMessage, db);

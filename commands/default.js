@@ -1,5 +1,4 @@
-const run = ({messageText, actions}) => {
-	const {sendMessage} = actions;
+const run = ({messageText, sendMessage}) => {
 	sendMessage(`I cannot ${messageText}`);
 	return true;
 }

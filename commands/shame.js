@@ -1,8 +1,7 @@
-const run = ({messageText, actions, db, message, myId}) => {
-	const {sendMessage} = actions;
+const run = ({messageText, sendMessage, db, message, myId}) => {
 	const tokens = messageText.split(' ');
 	if (tokens.length === 1 && tokens[0] === 'shame') {
-		getShameList(sendMessage, db);
+		getShameList(message.channel.id, sendMessage, db);
 		return true;
 	} else if (
 		tokens.length > 0 && (tokens[0] === 'shame')
@@ -19,24 +18,25 @@ const run = ({messageText, actions, db, message, myId}) => {
 	}
 }
 
-const getShameList = (sendMessage, db) => {
+const getShameList = (channelId, sendMessage, db) => {
 	try {
-		const shamedUsers = db.getData('/shame');
+		const shamedUsers = db.getData('/shame/' + channelId);
 		if (shamedUsers.length === 0) {
-			sendMessage('No users are currently being shamed.');
+			sendMessage('No users are currently being shamed in this channel.');
 		} else {
 			sendMessage(
-				'Shamed users: ' + 
+				'Shamed users in this channel: ' + 
 				shamedUsers.map(user => user.username).join(' ')
 			);
 		}
 	} catch (e) {
-		sendMessage('Could not get list of shamed users');
+		sendMessage('No users are currently being shamed in this channel.');
 	}
 }
 
 const addShame = (sendMessage, db, message, myId) => {
 	try {
+		const channelId = message.channel.id;
 		const usersToShame = message.mentions.users
 			.filter(user => user.id !== myId)
 			.map(user => ({
@@ -48,7 +48,7 @@ const addShame = (sendMessage, db, message, myId) => {
 			(usersToShame.length === 1 ? ' has ' : ' have ') +
 			'shame'
 		);
-		db.push('/shame', usersToShame, false);
+		db.push('/shame/' + channelId, usersToShame, false);
 	} catch (e) {
 		console.log(e);
 		sendMessage('There was an error');
@@ -57,6 +57,7 @@ const addShame = (sendMessage, db, message, myId) => {
 
 const removeShame = (sendMessage, db, message, myId) => {
 	try {
+		const channelId = message.channel.id;
 		const usersToUnshame = message.mentions.users
 			.filter(user => user.id !== myId)
 			.map(user => ({
@@ -68,10 +69,10 @@ const removeShame = (sendMessage, db, message, myId) => {
 			(usersToUnshame.length === 1 ? ' has ' : ' have ') +
 			'been absolved of their shame'
 		);
-		const shamedUsers = db.getData('/shame');
+		const shamedUsers = db.getData('/shame/' + channelId);
 		const newShamedUsers = shamedUsers
 			.filter(user => !usersToUnshame.map(user => user.id).includes(user.id));
-		db.push('/shame', newShamedUsers, true);
+		db.push('/shame/' + channelId, newShamedUsers, true);
 	} catch (e) {
 		console.log(e);
 		sendMessage('There was an error');
