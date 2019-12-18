@@ -22,27 +22,32 @@ client.on('message', (message) => {
 		return;
 	}
 
-	if (message.mentions.users.size) {
+	if (
+		message.mentions.users.size &&
+		message.mentions.users.has(myId)
+	) {
 		const actions = {
 			sendMessage: (s) => message.channel.send(s),
 			react: (s) => message.react(s)
 		}
-		if (message.mentions.users.has(myId)) {
-			const messageText = message.content.replace(`<@${myId}>`,"").trim();
-			if (messageText === "mute" || messageText === "shutup" || messageText === "shut up") {
-				muted = true;
-			} else if (messageText === "unmute" || messageText === "speak up") {
-				muted = false;
-				message.channel.send('I\'m here!');
-			} else {
-				commands({
-					messageText, 
-					...actions, 
-					message,
-					db,
-					myId
-				});
-			}
+		const messageText = message.content.replace(new RegExp(`<@!?${myId}>`),"").trim();
+		if (
+			messageText === "mute" ||
+			messageText === "shutup" ||
+			messageText === "shut up"
+		) {
+			muted = true;
+		} else if (messageText === "unmute" || messageText === "speak up") {
+			muted = false;
+			message.channel.send('I\'m here!');
+		} else {
+			commands({
+				messageText, 
+				...actions, 
+				message,
+				db,
+				myId
+			});
 		}
 	} else {
 		const actions = {
