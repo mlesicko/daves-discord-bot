@@ -1,0 +1,19 @@
+2019/12/18:
+• Fix bug where bot got confused by its own name.
+2018/08/28:
+• Shaming is channel-specific.
+• Bot no longer talks to itself.
+2019/08/18:
+• Shame command added.
+2019/08/08:
+• Improved database logic.
+• Fix for exploding head 69 bug.
+2019/08/03:
+• Added names command.
+• Added report bug command.
+2019/08/02
+• Added mute/unmute commands.
+• Added kill command.
+• Added patch notes command.
+• Added help command.
+• Added advice command.
