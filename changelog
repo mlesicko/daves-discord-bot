@@ -1,4 +1,5 @@
 2019/12/18:
+• Added echo command.
 • Fix bug where bot got confused by its own name.
 2018/08/28:
 • Shaming is channel-specific.
