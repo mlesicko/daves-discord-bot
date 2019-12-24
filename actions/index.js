@@ -1,9 +1,11 @@
 const sixtyNine = require('./sixtyNine.js');
 const oldTownRoad = require('./oldTownRoad.js');
 const shame = require('./shame.js');
+const taboo = require('./taboo.js');
 
 const commandArray = [
 	shame,
+	taboo,
 	sixtyNine,
 	oldTownRoad
 ];
