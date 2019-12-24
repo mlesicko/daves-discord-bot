@@ -6,6 +6,7 @@ const patchNotes = require('./patchNotes.js');
 const names = require('./names.js');
 const bugs = require('./bugs.js');
 const echo = require('./echo.js');
+const taboo = require('./taboo.js');
 const default_ = require('./default.js');
 
 const commandArray = [
@@ -17,6 +18,7 @@ const commandArray = [
 	names,
 	bugs,
 	echo,
+	taboo,
 	default_
 ];
 

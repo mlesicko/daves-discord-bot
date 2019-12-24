@@ -11,6 +11,8 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes = 
+	'2019/12/24\n' +
+	'• Added taboo and untaboo commands.\n' +
 	'2019/12/18\n' +
 	'• Added echo command.\n' +
 	'• Fixed bug where bot got confused by its own name.\n';
