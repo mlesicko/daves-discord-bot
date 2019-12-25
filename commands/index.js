@@ -7,6 +7,7 @@ const names = require('./names.js');
 const bugs = require('./bugs.js');
 const echo = require('./echo.js');
 const taboo = require('./taboo.js');
+const roll = require('./roll.js');
 const default_ = require('./default.js');
 
 const commandArray = [
@@ -19,6 +20,7 @@ const commandArray = [
 	bugs,
 	echo,
 	taboo,
+	roll,
 	default_
 ];
 
