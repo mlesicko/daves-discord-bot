@@ -10,7 +10,6 @@ const run = ({client, db}) => {
 	return false;
 }
 
-const test_channel_id = '606302807842357248';
 const minecraft_channel_id = '625806608949051413';
 
 const getIp = () => {
@@ -24,7 +23,7 @@ const didIpChange = (ip, db) => {
 
 const updateIp = (ip, client, db) => {
 	const minecraftChannel = client.channels.find(
-		(channel) => channel.id === test_channel_id
+		(channel) => channel.id === minecraft_channel_id
 	);
 	minecraftChannel.send(
 		`Alex's Minecraft server's IP address has changed.\n` +
