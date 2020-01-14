@@ -11,6 +11,9 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes = 
+	'2020/01/13\n' +
+	'• Added Minecraft command.\n' +
+	'• Bot will let us know when Alex\'s IP address changes.\n' +
 	'2019/12/24\n' +
 	'• Added dice rolling command.\n' +
 	'• Added taboo and untaboo commands.\n' +

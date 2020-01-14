@@ -42,6 +42,7 @@ client.on('message', (message) => {
 			message.channel.send('I\'m here!');
 		} else {
 			commands({
+				client,
 				messageText, 
 				...actions, 
 				message,
@@ -55,6 +56,7 @@ client.on('message', (message) => {
 			react: muted ? (_) => {} : (s) => message.react(s)
 		}
 		selfDirectedActions({
+			client,
 			messageText: message.content, 
 			...actions, 
 			message,
