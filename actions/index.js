@@ -2,8 +2,10 @@ const sixtyNine = require('./sixtyNine.js');
 const oldTownRoad = require('./oldTownRoad.js');
 const shame = require('./shame.js');
 const taboo = require('./taboo.js');
+const minecraft = require('./minecraft.js');
 
 const commandArray = [
+	minecraft,
 	shame,
 	taboo,
 	sixtyNine,

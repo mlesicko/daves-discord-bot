@@ -8,6 +8,7 @@ const bugs = require('./bugs.js');
 const echo = require('./echo.js');
 const taboo = require('./taboo.js');
 const roll = require('./roll.js');
+const minecraft = require('./minecraft.js');
 const default_ = require('./default.js');
 
 const commandArray = [
@@ -21,6 +22,7 @@ const commandArray = [
 	echo,
 	taboo,
 	roll,
+	minecraft,
 	default_
 ];
 
