@@ -6,7 +6,6 @@
 	"author": "Logger",
 	"dependencies": {
 		"discord.js": "^11.5.1",
-		"dns": "^0.2.2",
 		"node-json-db": "^1.0.1"
 	},
 	"scripts": {
