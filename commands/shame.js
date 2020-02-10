@@ -1,16 +1,13 @@
 const run = ({messageText, sendMessage, db, message, myId}) => {
 	const tokens = messageText.split(' ');
-	if (tokens.length === 1 && tokens[0] === 'shame') {
+	const command = tokens.length > 0 && tokens[0].toLowerCase();
+	if (tokens.length === 1 && command === 'shame') {
 		getShameList(message.channel.id, sendMessage, db);
 		return true;
-	} else if (
-		tokens.length > 0 && (tokens[0] === 'shame')
-	) {
+	} else if (command === 'shame') {
 		addShame(sendMessage, db, message, myId);
 		return true;
-	} else if (
-		tokens.length > 0 && (tokens[0] === 'unshame')
-	) {
+	} else if (command === 'unshame') {
 		removeShame(sendMessage, db, message, myId);
 		return true;
 	} else {

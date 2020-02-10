@@ -1,22 +1,23 @@
 const run = ({messageText, sendMessage, db}) => {
 	const tokens = messageText.split(' ');
+	const token0 = tokens.length > 0 && tokens[0].toLowerCase();
+	const token1 = tokens.length > 1 && tokens[1].toLowerCase();
 	if (
-		tokens.length > 2 &&
-		(
-			tokens[0] === 'bug' && tokens[1] === 'report' ||
-			tokens[0] === 'report' && tokens[1] === 'bug' ||
-			tokens[0] === 'add' && tokens[1] === 'bug'
-		)
+		token0 === 'bug' && token1 === 'report' ||
+		token0 === 'report' && token1 === 'bug' ||
+		token0 === 'add' && token1 === 'bug'
 	) {
 		reportBug(tokens.slice(2).join(' '), sendMessage, db);
 		return true;
 	} else if (
-		tokens.length > 0 &&
-		(['bug','report-bug','bug-report'].includes(tokens[0]))
+		['bug','report-bug','bug-report'].includes(token0)
 	) {
 		reportBug(tokens.slice(1).join(' '), sendMessage, db);
 		return true;
-	} else if (messageText === 'list bugs' || messageText === 'list-bugs') {
+	} else if (
+		messageText.toLowerCase() === 'list bugs' ||
+		messageText.toLowerCase() === 'list-bugs'
+	) {
 		listBugs(sendMessage, db);
 		return true;
 	} else {

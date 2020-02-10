@@ -1,20 +1,16 @@
 const run = ({messageText, sendMessage, db}) => {
 	const tokens = messageText.split(' ');
-	if (tokens.length === 1 && tokens[0] === 'name') {
+	const token0 = tokens.length > 0 && tokens[0].toLowerCase();
+	const token1 = tokens.length > 1 && tokens[1].toLowerCase();
+	if (token0 === 'name') {
 		getName(sendMessage, db);
 		return true;
-	} else if (
-		tokens.length > 0 &&
-		(tokens[0] === 'name-add' || tokens[0] === 'add-name')
-	) {
+	} else if (token0 === 'name-add' || token0 === 'add-name') {
 		putName(tokens.slice(1).join(' '), sendMessage, db);
 		return true;
 	} else if (
-		tokens.length > 2 &&
-		(
-			tokens[0] === 'add' && tokens[1] === 'name' ||
-			tokens[0] === 'name' && tokens[1] === 'add'
-		)
+		token0 === 'add' && token1 === 'name' ||
+		token0 === 'name' && token1 === 'add'
 	) {
 		putName(tokens.slice(2).join(' '), sendMessage, db);
 		return true;

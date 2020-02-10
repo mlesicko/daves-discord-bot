@@ -1,5 +1,5 @@
 const run = ({messageText, sendMessage}) => {
-	if (messageText === 'help') {
+	if (messageText.toLowerCase() === 'help') {
 		sendMessage(helpMessage);
 		return true;
 	} else {
