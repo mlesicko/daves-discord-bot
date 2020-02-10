@@ -2,7 +2,7 @@ const dns = require('dns');
 
 
 const run = ({messageText, sendMessage}) => {
-	if (messageText === 'minecraft') {
+	if (messageText.toLowerCase() === 'minecraft') {
 		sendDnsInfo(sendMessage);
 		return true;
 	} else {

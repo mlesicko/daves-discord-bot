@@ -1,17 +1,14 @@
 const run = ({messageText, sendMessage, db, message, myId}) => {
 	const tokens = messageText.split(' ');
 	const channelId = message.channel.id;
-	if (tokens.length === 1 && tokens[0] === 'taboo') {
+	const command = tokens.length > 0 && tokens[0].toLowerCase();
+	if (tokens.length === 1 && command === 'taboo') {
 		getTabooList(channelId, sendMessage, db);
 		return true;
-	} else if (
-		tokens.length > 0 && (tokens[0] === 'taboo')
-	) {
+	} else if (command === 'taboo') {
 		addTaboo(channelId, sendMessage, db, tokens.slice(1));
 		return true;
-	} else if (
-		tokens.length > 0 && (tokens[0] === 'untaboo')
-	) {
+	} else if (command === 'untaboo') {
 		removeTaboo(channelId, sendMessage, db, tokens.slice(1));
 		return true;
 	} else {

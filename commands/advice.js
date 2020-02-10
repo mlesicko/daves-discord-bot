@@ -1,20 +1,18 @@
 const run = ({messageText, sendMessage, db}) => {
 	const tokens = messageText.split(' ');
-	if (tokens.length === 1 && tokens[0] === 'advice') {
+	const token0 = tokens.length > 0 && tokens[0].toLowerCase();
+	const token1 = tokens.length > 1 && tokens[1].toLowerCase();
+	if (tokens.length === 1 && token0 === 'advice') {
 		getAdvice(sendMessage, db);
 		return true;
 	} else if (
-		tokens.length > 0 &&
-		(tokens[0] === 'advice-add' || tokens[0] === 'add-advice')
+		token0 === 'advice-add' || token0 === 'add-advice'
 	) {
 		putAdvice(tokens.slice(1).join(' '), sendMessage, db);
 		return true;
 	} else if (
-		tokens.length > 2 &&
-		(
-			tokens[0] === 'add' && tokens[1] === 'advice' ||
-			tokens[0] === 'advice' && tokens[1] === 'add'
-		)
+		token0 === 'add' && token1 === 'advice' ||
+		token0 === 'advice' && token1 === 'add'
 	) {
 		putAdvice(tokens.slice(2).join(' '), sendMessage, db);
 		return true;
