@@ -40,12 +40,16 @@ const addShame = (sendMessage, db, message, myId) => {
 				id: user.id,
 				username: user.username
 			}));
-		sendMessage(
-			usersToShame.map(user => user.username).join(' ') + 
-			(usersToShame.length === 1 ? ' has ' : ' have ') +
-			'shame'
-		);
-		db.push('/shame/' + channelId, usersToShame, false);
+		if (usersToShame > 0) {
+			sendMessage(
+				usersToShame.map(user => user.username).join(' ') + 
+				(usersToShame.length === 1 ? ' has ' : ' have ') +
+				'shame'
+			);
+			db.push('/shame/' + channelId, usersToShame, false);
+		} else {
+			sendMessage('I don\'t see a user to shame.');
+		}
 	} catch (e) {
 		console.log(e);
 		sendMessage('There was an error');
@@ -61,15 +65,19 @@ const removeShame = (sendMessage, db, message, myId) => {
 				id: user.id,
 				username: user.username
 			}));
-		sendMessage(
-			usersToUnshame.map(user => user.username).join(' ') + 
-			(usersToUnshame.length === 1 ? ' has ' : ' have ') +
-			'been absolved of their shame'
-		);
-		const shamedUsers = db.getData('/shame/' + channelId);
-		const newShamedUsers = shamedUsers
-			.filter(user => !usersToUnshame.map(user => user.id).includes(user.id));
-		db.push('/shame/' + channelId, newShamedUsers, true);
+		if (usersToUnshame.length > 0) {
+			sendMessage(
+				usersToUnshame.map(user => user.username).join(' ') + 
+				(usersToUnshame.length === 1 ? ' has ' : ' have ') +
+				'been absolved of their shame'
+			);
+			const shamedUsers = db.getData('/shame/' + channelId);
+			const newShamedUsers = shamedUsers
+				.filter(user => !usersToUnshame.map(user => user.id).includes(user.id));
+			db.push('/shame/' + channelId, newShamedUsers, true);
+		} else {
+			sendMessage('I don\'t see a user to unshame.');
+		}
 	} catch (e) {
 		console.log(e);
 		sendMessage('There was an error');
