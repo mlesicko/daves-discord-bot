@@ -34,7 +34,7 @@ const listBugs = (sendMessage, db) => {
 	try {
 		const bugs = db.getData('/bugs');
 		if (bugs && bugs.length > 0) {
-			sendMessage(bugs.join('\n'));
+			sendMessage(bugs.map((bug) => `• ${bug}`).join('\n'));
 		} else {
 			sendMessage('No bugs have been reported');
 		}
