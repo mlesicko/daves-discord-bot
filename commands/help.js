@@ -11,6 +11,7 @@ const helpMessage =
 	'I know these commands:\n' +
 	'@ advice\n' +
 	'@ add advice\n' +
+	'@ blackjack\n' +
 	'@ echo\n' +
 	'@ help\n' +
 	'@ kill yourself\n' +

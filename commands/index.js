@@ -9,6 +9,7 @@ const echo = require('./echo.js');
 const taboo = require('./taboo.js');
 const roll = require('./roll.js');
 const minecraft = require('./minecraft.js');
+const blackjack = require('./blackjack.js');
 const default_ = require('./default.js');
 
 const commandArray = [
@@ -23,6 +24,7 @@ const commandArray = [
 	taboo,
 	roll,
 	minecraft,
+	blackjack,
 	default_
 ];
 
