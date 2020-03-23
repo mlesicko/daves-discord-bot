@@ -10,7 +10,10 @@ const run = ({messageText, sendMessage}) => {
 
 }
 
-const patchNotes = 
+const patchNotes =
+	'2020/03/23\n' +
+	'• Minecraft server changes will now properly update the topic.\n' +
+	'• Fixed pluralization error in taboo response.\n' +
 	'2020/03/18\n' +
 	'• Added blackjack functionality.\n' +
 	'2020/01/13\n' +

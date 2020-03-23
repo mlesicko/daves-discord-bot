@@ -30,6 +30,9 @@ const updateIp = (ip, client, db) => {
 		`The new IP address is ${ip}.\n` +
 		`Please update accordingly.`
 	);
+	minecraftChannel.setTopic(
+		`davehub.ddns.net:19132 || ${ip}`
+	);
 	db.push('/minecraft-ip', ip, true);
 }
 
