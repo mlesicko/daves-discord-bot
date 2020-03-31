@@ -1,14 +1,14 @@
-const run = ({messageText, sendMessage, db, message, myId}) => {
+const run = ({messageText, sendMessage, db, message, myId, log}) => {
 	const tokens = messageText.split(' ');
 	const command = tokens.length > 0 && tokens[0].toLowerCase();
 	if (tokens.length === 1 && command === 'shame') {
 		getShameList(message.channel.id, sendMessage, db);
 		return true;
 	} else if (command === 'shame') {
-		addShame(sendMessage, db, message, myId);
+		addShame(sendMessage, db, message, myId, log);
 		return true;
 	} else if (command === 'unshame') {
-		removeShame(sendMessage, db, message, myId);
+		removeShame(sendMessage, db, message, myId, log);
 		return true;
 	} else {
 		return false;
@@ -31,7 +31,7 @@ const getShameList = (channelId, sendMessage, db) => {
 	}
 }
 
-const addShame = (sendMessage, db, message, myId) => {
+const addShame = (sendMessage, db, message, myId, log) => {
 	try {
 		const channelId = message.channel.id;
 		const usersToShame = message.mentions.users
@@ -40,7 +40,7 @@ const addShame = (sendMessage, db, message, myId) => {
 				id: user.id,
 				username: user.username
 			}));
-		if (usersToShame > 0) {
+		if (usersToShame.length > 0) {
 			sendMessage(
 				usersToShame.map(user => user.username).join(' ') + 
 				(usersToShame.length === 1 ? ' has ' : ' have ') +
@@ -51,12 +51,12 @@ const addShame = (sendMessage, db, message, myId) => {
 			sendMessage('I don\'t see a user to shame.');
 		}
 	} catch (e) {
-		console.log(e);
+		log(e);
 		sendMessage('There was an error');
 	}
 }
 
-const removeShame = (sendMessage, db, message, myId) => {
+const removeShame = (sendMessage, db, message, myId, log) => {
 	try {
 		const channelId = message.channel.id;
 		const usersToUnshame = message.mentions.users
@@ -79,7 +79,7 @@ const removeShame = (sendMessage, db, message, myId) => {
 			sendMessage('I don\'t see a user to unshame.');
 		}
 	} catch (e) {
-		console.log(e);
+		log(e);
 		sendMessage('There was an error');
 	}
 }

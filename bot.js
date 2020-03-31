@@ -9,10 +9,17 @@ const commands = require('./commands/index.js');
 const client = new Discord.Client();
 const db = new JsonDB(new Config('data', true, true, '/'));
 
+const log = (msg) => {
+	const timestamp = new Date().toLocaleString();
+	console.log(timestamp);
+	console.log(msg);
+	console.log('\n');
+}
+
 let muted = false;
 
 client.on('ready', () => {
-	console.log(`Logged in as ${client.user.tag}`);
+	log(`Logged in as ${client.user.tag}`);
 });
 
 client.on('message', (message) => {
@@ -47,7 +54,8 @@ client.on('message', (message) => {
 				...actions, 
 				message,
 				db,
-				myId
+				myId,
+				log
 			});
 		}
 	} else {
@@ -61,10 +69,13 @@ client.on('message', (message) => {
 			...actions, 
 			message,
 			db,
-			myId 
+			myId,
+			log
 		});
 	}
 });
+
+client.on('error', (error) => log(error));
 
 client.login(auth.token);
 

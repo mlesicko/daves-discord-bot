@@ -1,12 +1,12 @@
 const dns = require('dns');
 
-const run = ({client, db}) => {
+const run = ({client, db, log}) => {
 	getIp().then((ip) => {
 		if (didIpChange(ip, db)) {
 			updateIp(ip, client, db);
 		}
 	})
-	.catch((e) => console.log(e));
+	.catch((e) => log(e));
 	return false;
 }
 
