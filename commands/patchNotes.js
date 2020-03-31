@@ -11,6 +11,9 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'2020/03/31\n' +
+	'• Improved error logging.\n' +
+	'• Fixed bug where users couldn\'t be shamed.\n' +
 	'2020/03/23\n' +
 	'• Minecraft server changes will now properly update the topic.\n' +
 	'• Fixed pluralization error in taboo response.\n' +
