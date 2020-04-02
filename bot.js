@@ -13,17 +13,16 @@ const log = (msg) => {
 	const timestamp = new Date().toLocaleString();
 	console.log(timestamp);
 	console.log(msg);
-	console.log('\n');
+	console.log('-'.repeat(20));
 }
 
 let muted = false;
 
-client.on('ready', () => {
+const onReady = () => {
 	log(`Logged in as ${client.user.tag}`);
-});
+};
 
-client.on('message', (message) => {
-
+const onMessage = (message) => {
 	const myId = client.user.id;
 	if (message.author.id === myId) {
 		return;
@@ -73,9 +72,19 @@ client.on('message', (message) => {
 			log
 		});
 	}
-});
+};
 
-client.on('error', (error) => log(error));
+const withErrorLogging = (f) => (...args) => {
+	try {
+		f(...args);
+	} catch (e) {
+		log(e);
+	}
+}
 
+
+client.on('ready', withErrorLogging(onReady));
+client.on('message', withErrorLogging(onMessage));
+client.on('error', log);
 client.login(auth.token);
 
