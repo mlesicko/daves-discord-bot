@@ -3,10 +3,8 @@ const run = ({messageText, sendMessage}) => {
 	const cleanText = messageText.replace(/<[^>]*>/g, '');
 	if (cleanText.includes('69')) {
 		sendMessage('Nice!');
-		return true;
-	} else {
-		return false;
 	}
+	return false;
 }
 
 module.exports=run;
