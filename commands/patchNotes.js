@@ -11,6 +11,8 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'2020/04/25\n' +
+	'• Event functionality.\n' +
 	'2020/04/09\n' +
 	'• Respond appropriately to additional meme number.\n' +
 	'2020/03/31\n' +

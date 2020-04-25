@@ -4,6 +4,7 @@ const { Config } = require('node-json-db/dist/lib/JsonDBConfig');
 const auth = require('./auth.json');
 const selfDirectedActions = require('./actions/index.js');
 const commands = require('./commands/index.js');
+const alarms = require('./alarms/index.js');
 
 //initialize Discord Bot
 const client = new Discord.Client();
@@ -88,3 +89,4 @@ client.on('message', withErrorLogging(onMessage));
 client.on('error', log);
 client.login(auth.token);
 
+alarms.start(client, db);
