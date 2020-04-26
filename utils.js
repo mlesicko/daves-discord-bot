@@ -6,4 +6,9 @@ const objectMap = (obj, f) => {
 	return newObj;
 }
 
-module.exports = { objectMap };
+const runAndSetInterval = (f, interval, ...args) => {
+	f(...args);
+	return setInterval(f, interval, ...args);
+}
+
+module.exports = { objectMap, runAndSetInterval };
