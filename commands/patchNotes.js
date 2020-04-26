@@ -11,6 +11,9 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'2020/04/26\n' +
+	'• Minecraft is now an alarm rather than an action.\n' +
+	'• Actions renamed to responses.\n' +
 	'2020/04/25\n' +
 	'• Event functionality.\n' +
 	'2020/04/09\n' +
