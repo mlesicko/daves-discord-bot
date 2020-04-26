@@ -1,4 +1,4 @@
-const { objectMap } = require('../utils.js');
+const { objectMap, runAndSetInterval } = require('../utils.js');
 
 const second = 1000;
 const minute = second * 60;
@@ -7,7 +7,7 @@ const alarmPaths = ['/events/']
 let alarmInterval;
 
 const start = (args) => {
-	alarmInterval = setInterval(checkAlarms, minute, args); 
+	alarmInterval = runAndSetInterval(checkAlarms, minute, args);
 }
 
 const stop = () => {

@@ -1,4 +1,5 @@
 const dns = require('dns');
+const { runAndSetInterval } = require('../utils.js');
 
 const second = 1000;
 const minute = second * 60;
@@ -6,7 +7,7 @@ const minute = second * 60;
 let alarmInterval;
 
 const start = (args) => {
-	alarmInterval = setInterval(checkMinecraftIp, 10 * minute, args);
+	alarmInterval = runAndSetInterval(checkMinecraftIp, 10 * minute, args);
 }
 
 const stop = () => {

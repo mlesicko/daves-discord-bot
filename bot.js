@@ -21,6 +21,8 @@ let muted = false;
 
 const onReady = () => {
 	log(`Logged in as ${client.user.tag}`);
+	alarms.stop();
+	alarms.start({client, db, log});
 };
 
 const onMessage = (message) => {
@@ -89,4 +91,3 @@ client.on('message', withErrorLogging(onMessage));
 client.on('error', log);
 client.login(auth.token);
 
-alarms.start({client, db, log});
