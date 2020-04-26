@@ -6,8 +6,8 @@ const alarmPaths = ['/events/']
 
 let alarmInterval;
 
-const start = (client, db) => {
-	alarmInterval = setInterval(checkAlarms, minute, client, db); 
+const start = (args) => {
+	alarmInterval = setInterval(checkAlarms, minute, args); 
 }
 
 const stop = () => {
@@ -17,7 +17,7 @@ const stop = () => {
 	alarmInterval = undefined;
 }
 
-const checkAlarms = (client, db) => {
+const checkAlarms = ({client, db}) => {
 	alarmPaths.forEach((path) => checkAlarmsInPath(client, db, path));
 }
 

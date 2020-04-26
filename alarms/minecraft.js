@@ -1,6 +1,22 @@
 const dns = require('dns');
 
-const run = ({client, db, log}) => {
+const second = 1000;
+const minute = second * 60;
+
+let alarmInterval;
+
+const start = (args) => {
+	alarmInterval = setInterval(checkMinecraftIp, 10 * minute, args);
+}
+
+const stop = () => {
+	if (alarmInterval != undefined) {
+		clearInterval(interval)
+	}
+	alarmInterval = undefined;
+}
+
+const checkMinecraftIp = ({client, db, log}) => {
 	getIp().then((ip) => {
 		if (didIpChange(ip, db)) {
 			updateIp(ip, client, db);
@@ -37,4 +53,4 @@ const updateIp = (ip, client, db) => {
 }
 
 
-module.exports=run;
+module.exports={start, stop};

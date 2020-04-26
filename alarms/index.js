@@ -1,10 +1,12 @@
 const genericAlarm = require('./genericAlarm.js');
+const minecraft = require('./minecraft.js');
 
 const alarms = [
-	genericAlarm
+	genericAlarm,
+	minecraft
 ];
 
-const start = (client, db) => alarms.forEach((alarm) => alarm.start(client, db));
+const start = (args) => alarms.forEach((alarm) => alarm.start(args));
 
 const stop = () => alarms.forEach((alarm) => alarm.stop());
 

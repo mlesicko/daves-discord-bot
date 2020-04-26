@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const { JsonDB } = require('node-json-db');
 const { Config } = require('node-json-db/dist/lib/JsonDBConfig');
 const auth = require('./auth.json');
-const selfDirectedActions = require('./actions/index.js');
+const responses = require('./responses/index.js');
 const commands = require('./commands/index.js');
 const alarms = require('./alarms/index.js');
 
@@ -63,7 +63,7 @@ const onMessage = (message) => {
 			sendMessage: muted ? (_) => {} : (s) => message.channel.send(s),
 			react: muted ? (_) => {} : (s) => message.react(s)
 		}
-		selfDirectedActions({
+		responses({
 			client,
 			messageText: message.content, 
 			...actions, 
@@ -89,4 +89,4 @@ client.on('message', withErrorLogging(onMessage));
 client.on('error', log);
 client.login(auth.token);
 
-alarms.start(client, db);
+alarms.start({client, db, log});
