@@ -12,7 +12,7 @@ const start = (args) => {
 
 const stop = () => {
 	if (alarmInterval != undefined) {
-		clearInterval(interval)
+		clearInterval(alarmInterval)
 	}
 	alarmInterval = undefined;
 }
