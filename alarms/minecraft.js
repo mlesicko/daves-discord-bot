@@ -22,8 +22,9 @@ const checkMinecraftIp = ({client, db, log}) => {
 		if (didIpChange(ip, db)) {
 			updateIp(ip, client, db);
 		}
+		resetErrorCount(db);
 	})
-	.catch((e) => log(e));
+	.catch((e) => handleError(e, client, db, log));
 	return false;
 }
 
@@ -39,9 +40,7 @@ const didIpChange = (ip, db) => {
 }
 
 const updateIp = (ip, client, db) => {
-	const minecraftChannel = client.channels.find(
-		(channel) => channel.id === minecraft_channel_id
-	);
+	const minecraftChannel = getMinecraftChannel(client);
 	minecraftChannel.send(
 		`Alex's Minecraft server's IP address has changed.\n` +
 		`The new IP address is ${ip}.\n` +
@@ -53,5 +52,23 @@ const updateIp = (ip, client, db) => {
 	db.push('/minecraft-ip', ip, true);
 }
 
+const handleError = (e, client, db, log) => {
+	const failedChecks = (db.exists('/minecraft-failed-checks') &&
+		db.getData('/minecraft-failed-checks')) || 0;
+	if (failedChecks === 0) {
+		db.push('/minecraft-failed-checks', 1, true);
+	} else if (failedChecks === 1) {
+		getMinecraftChannel(client).send(
+			'I\'m having trouble reaching the Minecraft server:\n' + e
+		);
+		db.push('/minecraft-failed-checks', 2, true);
+	}
+	log(e);
+}
+
+const resetErrorCount = (db) => db.push('/minecraft-failed-checks', 0, true);
+
+const getMinecraftChannel = (client) =>
+	client.channels.find((channel) => channel.id === minecraft_channel_id);
 
 module.exports={start, stop};

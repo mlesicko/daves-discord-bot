@@ -11,6 +11,8 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'2020/05/04\n' +
+	'• Bot will notify if it\'s having trouble reaching the Minecraft server.\n' +
 	'2020/04/26\n' +
 	'• Minecraft is now an alarm rather than an action.\n' +
 	'• Actions renamed to responses.\n' +
