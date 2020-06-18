@@ -5,10 +5,10 @@ const run = ({messageText, sendMessage, db, message, myId, log}) => {
 	const channelId = message.channel.id;
 	const token0 = tokens.length > 0 && tokens[0].toLowerCase();
 	const token1 = tokens.length > 1 && tokens[1].toLowerCase();
-	if (token0 === 'create-event') {
+	if (token0 === 'create-event' || token0 === 'add-event') {
 		createEvent(channelId, sendMessage, db, tokens.slice(1).join(' '), log);
 		return true;
-	} else if (token0 === 'create' && token1 === 'event') {
+	} else if ((token0 === 'create' || token0 === 'add') && token1 === 'event') {
 		createEvent(channelId, sendMessage, db, tokens.slice(2).join(' '), log);
 		return true;
 	} else if (token0 === 'event' || token0 === 'events' ||
