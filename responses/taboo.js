@@ -45,7 +45,6 @@ const getTabooWords = (channelId, db) => {
 	try {
 		return db.getData('/taboo/' + channelId);
 	} catch (e) {
-		logError(e);
 		return [];
 	}
 }
