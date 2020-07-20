@@ -27,7 +27,11 @@ const helpMessage =
 	'@ unshame\n' +
 	'@ taboo\n' +
 	'@ untaboo\n' +
-	'@ what\'s new';
+	'@ what\'s new\n' +
+	'\n' +
+	'I know these meta-commands:\n' +
+	'@ loudly [command]\n' +
+	'@ quietly [command]';
 
 
 module.exports=run;
