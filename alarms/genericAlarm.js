@@ -1,4 +1,5 @@
 const { objectMap, runAndSetInterval } = require('../utils.js');
+const { withErrorLogging } = require('../errorLogging.js');
 
 const second = 1000;
 const minute = second * 60;
@@ -7,7 +8,7 @@ const alarmPaths = ['/events/']
 let alarmInterval;
 
 const start = (args) => {
-	alarmInterval = runAndSetInterval(checkAlarms, minute, args);
+	alarmInterval = runAndSetInterval(withErrorLogging(checkAlarms), minute, args);
 }
 
 const stop = () => {
@@ -38,11 +39,7 @@ const checkAlarmsInPath = (client, db, path) => {
 }
 
 const getAlarms = (db, path) => {
-	try {
-		return db.getData(path);
-	} catch (e) {
-		return {}
-	}
+	return db.getData(path);
 }
 
 const updateAlarms = (db, alarmsObject, path) => {

@@ -1,3 +1,5 @@
+const { logError } = require('../errorLogging.js');
+
 const run = ({react, sendMessage, message, db}) => {
 	const userId = message.author.id;
 	const channelId = message.channel.id;
@@ -32,6 +34,7 @@ const getShamedUsers = (channelId, db) => {
 	try {
 		return db.getData('/shame/' + channelId).map(user => user.id);
 	} catch (e) {
+		logError(e);
 		return [];
 	}
 }

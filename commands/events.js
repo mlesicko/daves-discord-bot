@@ -1,33 +1,34 @@
 const chrono = require('chrono-node');
+const { logError } = require('../errorLogging.js');
 
-const run = ({messageText, sendMessage, db, message, myId, log}) => {
+const run = ({messageText, sendMessage, db, message, myId}) => {
 	const tokens = messageText.split(' ');
 	const channelId = message.channel.id;
 	const token0 = tokens.length > 0 && tokens[0].toLowerCase();
 	const token1 = tokens.length > 1 && tokens[1].toLowerCase();
 	if (token0 === 'create-event' || token0 === 'add-event') {
-		createEvent(channelId, sendMessage, db, tokens.slice(1).join(' '), log);
+		createEvent(channelId, sendMessage, db, tokens.slice(1).join(' '));
 		return true;
 	} else if ((token0 === 'create' || token0 === 'add') && token1 === 'event') {
-		createEvent(channelId, sendMessage, db, tokens.slice(2).join(' '), log);
+		createEvent(channelId, sendMessage, db, tokens.slice(2).join(' '));
 		return true;
 	} else if (token0 === 'event' || token0 === 'events' ||
 				token0 === 'list-events' || 
 				(token0 === 'list' && token1 === 'events' )) {
-		listEvents(channelId, sendMessage, db, log);
+		listEvents(channelId, sendMessage, db);
 		return true;
 	} else if (token0 === 'delete-event' || token0 === 'delete-events') {
-		deleteEvents(channelId, sendMessage, db, tokens.slice(1), log);
+		deleteEvents(channelId, sendMessage, db, tokens.slice(1));
 		return true;
 	} else if (token0 === 'delete' && (token1 === 'event' || token1 === 'events')) {
-		deleteEvents(channelId, sendMessage, db, tokens.slice(2), log);
+		deleteEvents(channelId, sendMessage, db, tokens.slice(2));
 		return true;
 	} else {
 		return false;
 	}
 }
 
-const createEvent = (channelId, sendMessage, db, message, log) => {
+const createEvent = (channelId, sendMessage, db, message) => {
 	try {
 		const alarmTime = chrono.parseDate(message, new Date(), {forwardDate: true});
 		if (alarmTime.getTime() <= Date.now()) {
@@ -45,7 +46,7 @@ const createEvent = (channelId, sendMessage, db, message, log) => {
 			}], false);
 		}
 	} catch (e) {
-		log(e);
+		logError(e);
 		sendMessage('There was an error');
 	}
 }
@@ -87,6 +88,7 @@ const getEvents = (channelId, db) => {
 		return db.getData('/events/' + channelId)
 			.sort((e1, e2) => e1.time - e2.time);
 	} catch (e) {
+		logError(e);
 		return [];
 	}
 }

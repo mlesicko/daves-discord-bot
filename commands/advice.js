@@ -1,3 +1,5 @@
+const {logError} = require('../errorLogging.js');
+
 const run = ({messageText, sendMessage, db}) => {
 	const tokens = messageText.split(' ');
 	const token0 = tokens.length > 0 && tokens[0].toLowerCase();
@@ -31,6 +33,7 @@ const getAdvice = (sendMessage, db) => {
 			sendMessage('I have no advice at this time.');
 		}
 	} catch (e) {
+		logError(e);
 		sendMessage('I have no advice at this time.');
 	}
 }

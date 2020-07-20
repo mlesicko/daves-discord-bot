@@ -1,5 +1,6 @@
 const dns = require('dns');
 const { runAndSetInterval } = require('../utils.js');
+const { logError, withErrorLogging } = require('../errorLogging.js');
 
 const second = 1000;
 const minute = second * 60;
@@ -7,7 +8,11 @@ const minute = second * 60;
 let alarmInterval;
 
 const start = (args) => {
-	alarmInterval = runAndSetInterval(checkMinecraftIp, 10 * minute, args);
+	alarmInterval = runAndSetInterval(
+		withErrorLogging(checkMinecraftIp),
+		10 * minute,
+		args
+	);
 }
 
 const stop = () => {
@@ -17,14 +22,17 @@ const stop = () => {
 	alarmInterval = undefined;
 }
 
-const checkMinecraftIp = ({client, db, log}) => {
+const checkMinecraftIp = ({client, db}) => {
 	getIp().then((ip) => {
 		if (didIpChange(ip, db)) {
 			updateIp(ip, client, db);
 		}
 		resetErrorCount(db);
 	})
-	.catch((e) => handleError(e, client, db, log));
+	.catch((e) => {
+		logError(e);
+		withErrorLogging(handleError)(e, client, db);
+	});
 	return false;
 }
 
@@ -52,7 +60,7 @@ const updateIp = (ip, client, db) => {
 	db.push('/minecraft-ip', ip, true);
 }
 
-const handleError = (e, client, db, log) => {
+const handleError = (e, client, db) => {
 	const failedChecks = (db.exists('/minecraft-failed-checks') &&
 		db.getData('/minecraft-failed-checks')) || 0;
 	if (failedChecks === 0) {
@@ -63,7 +71,6 @@ const handleError = (e, client, db, log) => {
 		);
 		db.push('/minecraft-failed-checks', 2, true);
 	}
-	log(e);
 }
 
 const resetErrorCount = (db) => db.push('/minecraft-failed-checks', 0, true);

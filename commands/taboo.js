@@ -1,4 +1,6 @@
-const run = ({messageText, sendMessage, db, message, myId, log}) => {
+const { logError } = require('../errorLogging.js');
+
+const run = ({messageText, sendMessage, db, message, myId}) => {
 	const tokens = messageText.split(' ');
 	const channelId = message.channel.id;
 	const command = tokens.length > 0 && tokens[0].toLowerCase();
@@ -6,10 +8,10 @@ const run = ({messageText, sendMessage, db, message, myId, log}) => {
 		getTabooList(channelId, sendMessage, db);
 		return true;
 	} else if (command === 'taboo') {
-		addTaboo(channelId, sendMessage, db, tokens.slice(1), log);
+		addTaboo(channelId, sendMessage, db, tokens.slice(1));
 		return true;
 	} else if (command === 'untaboo') {
-		removeTaboo(channelId, sendMessage, db, tokens.slice(1), log);
+		removeTaboo(channelId, sendMessage, db, tokens.slice(1));
 		return true;
 	} else {
 		return false;
@@ -28,11 +30,12 @@ const getTabooList = (channelId, sendMessage, db) => {
 			);
 		}
 	} catch (e) {
+		logError(e);
 		sendMessage('No words are currently taboo in this channel.');
 	}
 }
 
-const addTaboo = (channelId, sendMessage, db, words, log) => {
+const addTaboo = (channelId, sendMessage, db, words) => {
 	try {
 		sendMessage(
 			words.join(' ') + 
@@ -41,12 +44,12 @@ const addTaboo = (channelId, sendMessage, db, words, log) => {
 		);
 		db.push('/taboo/' + channelId, words, false);
 	} catch (e) {
-		log(e);
+		logError(e);
 		sendMessage('There was an error');
 	}
 }
 
-const removeTaboo = (channelId, sendMessage, db, words, log) => {
+const removeTaboo = (channelId, sendMessage, db, words) => {
 	try {
 		sendMessage(
 			words.join(' ') + 
@@ -57,7 +60,7 @@ const removeTaboo = (channelId, sendMessage, db, words, log) => {
 		const newTabooWords = tabooWords.filter(word => !words.includes(word));
 		db.push('/taboo/' + channelId, newTabooWords, true);
 	} catch (e) {
-		log(e);
+		logError(e);
 		sendMessage('There was an error');
 	}
 }

@@ -1,14 +1,16 @@
-const run = ({messageText, sendMessage, db, message, myId, log}) => {
+const { logError } = require('../errorLogging.js');
+
+const run = ({messageText, sendMessage, db, message, myId}) => {
 	const tokens = messageText.split(' ');
 	const command = tokens.length > 0 && tokens[0].toLowerCase();
 	if (tokens.length === 1 && command === 'shame') {
 		getShameList(message.channel.id, sendMessage, db);
 		return true;
 	} else if (command === 'shame') {
-		addShame(sendMessage, db, message, myId, log);
+		addShame(sendMessage, db, message, myId);
 		return true;
 	} else if (command === 'unshame') {
-		removeShame(sendMessage, db, message, myId, log);
+		removeShame(sendMessage, db, message, myId);
 		return true;
 	} else {
 		return false;
@@ -27,11 +29,12 @@ const getShameList = (channelId, sendMessage, db) => {
 			);
 		}
 	} catch (e) {
+		logError(e);
 		sendMessage('No users are currently being shamed in this channel.');
 	}
 }
 
-const addShame = (sendMessage, db, message, myId, log) => {
+const addShame = (sendMessage, db, message, myId) => {
 	try {
 		const channelId = message.channel.id;
 		const usersToShame = message.mentions.users
@@ -51,12 +54,12 @@ const addShame = (sendMessage, db, message, myId, log) => {
 			sendMessage('I don\'t see a user to shame.');
 		}
 	} catch (e) {
-		log(e);
+		logError(e);
 		sendMessage('There was an error');
 	}
 }
 
-const removeShame = (sendMessage, db, message, myId, log) => {
+const removeShame = (sendMessage, db, message, myId) => {
 	try {
 		const channelId = message.channel.id;
 		const usersToUnshame = message.mentions.users
@@ -79,7 +82,7 @@ const removeShame = (sendMessage, db, message, myId, log) => {
 			sendMessage('I don\'t see a user to unshame.');
 		}
 	} catch (e) {
-		log(e);
+		logError(e);
 		sendMessage('There was an error');
 	}
 }
