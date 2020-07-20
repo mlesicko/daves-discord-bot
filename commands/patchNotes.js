@@ -11,6 +11,8 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'2020/07/20\n' +
+	'• Bot now knows two meta-commands: quietly and loudly.\n' +
 	'2020/05/04\n' +
 	'• Bot will notify if it\'s having trouble reaching the Minecraft server.\n' +
 	'2020/04/26\n' +

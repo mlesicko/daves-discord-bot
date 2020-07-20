@@ -4,6 +4,7 @@ const { Config } = require('node-json-db/dist/lib/JsonDBConfig');
 const auth = require('./auth.json');
 const responses = require('./responses/index.js');
 const commands = require('./commands/index.js');
+const metacommands = require('./metacommands/index.js');
 const alarms = require('./alarms/index.js');
 const {log, logError, withErrorLogging} = require('./errorLogging.js');
 
@@ -19,53 +20,37 @@ const onReady = () => {
 	alarms.start({client, db});
 };
 
+const isMuted = () => {
+	try {
+		return db.getData('/muted');
+	} catch (e) {
+		return false;
+	}
+}
+
+const isCommand = (myId, message) => {
+	return message.mentions.users.size && message.mentions.users.has(myId);
+}
+
 const onMessage = (message) => {
 	const myId = client.user.id;
 	if (message.author.id === myId) {
 		return;
 	}
-
-	if (
-		message.mentions.users.size &&
-		message.mentions.users.has(myId)
-	) {
-		const actions = {
-			sendMessage: (s) => message.channel.send(s),
-			react: (s) => message.react(s)
-		}
-		const messageText = message.content.replace(new RegExp(`<@!?${myId}>`),"").trim();
-		if (
-			messageText === "mute" ||
-			messageText === "shutup" ||
-			messageText === "shut up"
-		) {
-			muted = true;
-		} else if (messageText === "unmute" || messageText === "speak up") {
-			muted = false;
-			message.channel.send('I\'m here!');
-		} else {
-			commands({
-				client,
-				messageText, 
-				...actions, 
-				message,
-				db,
-				myId,
-			});
-		}
-	} else {
-		const actions = {
-			sendMessage: muted ? (_) => {} : (s) => message.channel.send(s),
-			react: muted ? (_) => {} : (s) => message.react(s)
-		}
-		responses({
-			client,
-			messageText: message.content, 
-			...actions, 
-			message,
-			db,
-			myId,
-		});
+	const messageText = message.content.replace(new RegExp(`<@!?${myId}>`),"").trim();
+	const state = {
+		client,
+		messageText, 
+		sendMessage: (s) => message.channel.send(s),
+		react: (s) => message.react(s),
+		message,
+		db,
+		myId
+	};
+	if (isCommand(myId, message)) {
+		commands(metacommands(state));
+	} else if (!isMuted()){
+		responses(state);
 	}
 };
 

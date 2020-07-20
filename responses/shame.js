@@ -34,7 +34,6 @@ const getShamedUsers = (channelId, db) => {
 	try {
 		return db.getData('/shame/' + channelId).map(user => user.id);
 	} catch (e) {
-		logError(e);
 		return [];
 	}
 }
