@@ -1,3 +1,5 @@
+const { logError } = require('../errorLogging.js');
+
 const run = ({messageText, sendMessage, db}) => {
 	const tokens = messageText.split(' ');
 	const token0 = tokens.length > 0 && tokens[0].toLowerCase();
@@ -29,6 +31,7 @@ const getName = (sendMessage, db) => {
 			sendMessage('I don\'t know any names.');
 		}
 	} catch (e) {
+		logError(e);
 		sendMessage('I don\'t know any names.');
 	}
 }

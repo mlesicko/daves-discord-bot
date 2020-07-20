@@ -1,3 +1,5 @@
+const { logError } = require('../errorLogging.js');
+
 const run = ({messageText, sendMessage, db}) => {
 	const tokens = messageText.split(' ');
 	const token0 = tokens.length > 0 && tokens[0].toLowerCase();
@@ -39,6 +41,7 @@ const listBugs = (sendMessage, db) => {
 			sendMessage('No bugs have been reported');
 		}
 	} catch (e) {
+		logError(e);
 		sendMessage('No bugs have been reported');
 	}
 }

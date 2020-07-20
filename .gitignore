@@ -63,3 +63,4 @@ typings/
 # exclude personal data
 auth.json
 data.json
+backups/*

@@ -1,3 +1,5 @@
+const { logError } = require('../errorLogging.js');
+
 const run = ({sendMessage, message, messageText, db}) => {
 	const channelId = message.channel.id;
 	const tabooWords = findTabooWords(messageText, channelId, db);
@@ -43,6 +45,7 @@ const getTabooWords = (channelId, db) => {
 	try {
 		return db.getData('/taboo/' + channelId);
 	} catch (e) {
+		logError(e);
 		return [];
 	}
 }

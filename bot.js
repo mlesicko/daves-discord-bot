@@ -5,24 +5,18 @@ const auth = require('./auth.json');
 const responses = require('./responses/index.js');
 const commands = require('./commands/index.js');
 const alarms = require('./alarms/index.js');
+const {log, logError, withErrorLogging} = require('./errorLogging.js');
 
 //initialize Discord Bot
 const client = new Discord.Client();
 const db = new JsonDB(new Config('data', true, true, '/'));
-
-const log = (msg) => {
-	const timestamp = new Date().toLocaleString();
-	console.log(timestamp);
-	console.log(msg);
-	console.log('-'.repeat(20));
-}
 
 let muted = false;
 
 const onReady = () => {
 	log(`Logged in as ${client.user.tag}`);
 	alarms.stop();
-	alarms.start({client, db, log});
+	alarms.start({client, db});
 };
 
 const onMessage = (message) => {
@@ -57,7 +51,6 @@ const onMessage = (message) => {
 				message,
 				db,
 				myId,
-				log
 			});
 		}
 	} else {
@@ -72,22 +65,12 @@ const onMessage = (message) => {
 			message,
 			db,
 			myId,
-			log
 		});
 	}
 };
 
-const withErrorLogging = (f) => (...args) => {
-	try {
-		f(...args);
-	} catch (e) {
-		log(e);
-	}
-}
-
-
 client.on('ready', withErrorLogging(onReady));
 client.on('message', withErrorLogging(onMessage));
-client.on('error', log);
+client.on('error', logError);
 client.login(auth.token);
 
