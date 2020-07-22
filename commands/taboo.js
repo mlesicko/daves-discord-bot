@@ -1,8 +1,8 @@
 const { logError } = require('../errorLogging.js');
 
-const run = ({messageText, sendMessage, db, message, myId}) => {
+const run = ({channel, messageText, sendMessage, db, message, myId}) => {
 	const tokens = messageText.split(' ');
-	const channelId = message.channel.id;
+	const channelId = channel.id;
 	const command = tokens.length > 0 && tokens[0].toLowerCase();
 	if (tokens.length === 1 && command === 'taboo') {
 		getTabooList(channelId, sendMessage, db);

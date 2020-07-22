@@ -1,3 +1,7 @@
+2020/07/22
+• Bot can execute commands on a different channel than it was invoked on.
+• Bot can handle multiple metacommands on one command.
+• Bot can tell when people are talking about it.
 2020/07/20
 • Bot now knows two meta-commands: quietly and loudly.
 2020/05/04

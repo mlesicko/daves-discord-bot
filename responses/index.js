@@ -3,11 +3,13 @@ const oldTownRoad = require('./oldTownRoad.js');
 const shame = require('./shame.js');
 const taboo = require('./taboo.js');
 const leaf = require('./leaf.js');
+const named = require('./named.js');
 
 const commandArray = [
 	// Blocking
 	shame,
 	taboo,
+	named,
 	// Non-blocking
 	sixtyNine,
 	oldTownRoad,

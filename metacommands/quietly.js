@@ -9,9 +9,12 @@ const run = (state) => {
 }
 
 const silenceMessage = (state, messageText) => {
-	const sendMessage = (message) => {}
+	state.message.react('👍')
+	const transformMessage = (message) => '';
+	const sendMessage = (message) => {};
     return {
 		...state,
+		transformMessage,
 		messageText,
 		sendMessage
 	};
