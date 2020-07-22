@@ -40,7 +40,6 @@ const onMessage = (message) => {
 	}
 	const state = {
 		client,
-		transformMessage: (s) => s,
 		sendMessage: (s) => s && message.channel.send(s),
 		react: (s) => message.react(s),
 		message,

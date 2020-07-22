@@ -32,6 +32,7 @@ const helpMessage =
 	'I know these meta-commands:\n' +
 	'@ #[channel] [command]\n' +
 	'@ loudly [command]\n' +
+	'@ mocking [command]\n' +
 	'@ quietly [command]';
 
 
