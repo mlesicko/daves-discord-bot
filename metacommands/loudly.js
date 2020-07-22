@@ -9,13 +9,11 @@ const run = (state) => {
 }
 
 const makeMessageLoud = (state, messageText) => {
-	const transformMessage = (m) => state.transformMessage(m).toUpperCase();
-	const sendMessage = (message) => state.sendMessage(transformMessage(message));
+	const transformFn = (m) => state.transformFn(m).toUpperCase();
     return {
 		...state,
-		transformMessage,
+		transformFn,
 		messageText,
-		sendMessage
 	};
 }
 

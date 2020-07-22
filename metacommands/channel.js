@@ -22,14 +22,11 @@ const getChannelById = (channelId, state) => {
 }
 
 const updateForChannel = (channel, messageText, state) => {
-	const sendMessage = (message) => {
-		const transformedMessage = state.transformMessage(message);
-		transformedMessage && channel.send(transformedMessage);
-	}
+	const sendFn = (message) => channel.send(message);
 	return {
 		...state,
 		messageText,
-		sendMessage,
+		sendFn,
 		channel
 	};
 }
