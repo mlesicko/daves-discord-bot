@@ -1,9 +1,9 @@
 const chrono = require('chrono-node');
 const { logError } = require('../errorLogging.js');
 
-const run = ({messageText, sendMessage, db, message, myId}) => {
+const run = ({channel, messageText, sendMessage, db, message, myId}) => {
 	const tokens = messageText.split(' ');
-	const channelId = message.channel.id;
+	const channelId = channel.id;
 	const token0 = tokens.length > 0 && tokens[0].toLowerCase();
 	const token1 = tokens.length > 1 && tokens[1].toLowerCase();
 	if (token0 === 'create-event' || token0 === 'add-event') {

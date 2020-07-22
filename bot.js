@@ -29,7 +29,8 @@ const isMuted = () => {
 }
 
 const isCommand = (myId, message) => {
-	return message.mentions.users.size && message.mentions.users.has(myId);
+	const tokens = message.content.split(' ');
+	return tokens.length && tokens[0].match(new RegExp(`^<@!?${myId}>$`));
 }
 
 const onMessage = (message) => {
@@ -37,17 +38,19 @@ const onMessage = (message) => {
 	if (message.author.id === myId) {
 		return;
 	}
-	const messageText = message.content.replace(new RegExp(`<@!?${myId}>`),"").trim();
 	const state = {
 		client,
-		messageText, 
-		sendMessage: (s) => message.channel.send(s),
+		transformMessage: (s) => s,
+		sendMessage: (s) => s && message.channel.send(s),
 		react: (s) => message.react(s),
 		message,
+		messageText: message.content,
+		channel: message.channel,
 		db,
 		myId
 	};
 	if (isCommand(myId, message)) {
+		state.messageText = state.messageText.split(' ').slice(1).join(' ');
 		commands(metacommands(state));
 	} else if (!isMuted()){
 		responses(state);

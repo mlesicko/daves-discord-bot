@@ -11,24 +11,11 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'2020/07/22\n' +
+	'• Bot can execute commands on a different channel than it was invoked on.\n' +
+	'• Bot can handle multiple metacommands on one command.\n' +
+	'• Bot can tell when people are talking about it.\n' +
 	'2020/07/20\n' +
-	'• Bot now knows two meta-commands: quietly and loudly.\n' +
-	'2020/05/04\n' +
-	'• Bot will notify if it\'s having trouble reaching the Minecraft server.\n' +
-	'2020/04/26\n' +
-	'• Minecraft is now an alarm rather than an action.\n' +
-	'• Actions renamed to responses.\n' +
-	'2020/04/25\n' +
-	'• Event functionality.\n' +
-	'2020/04/09\n' +
-	'• Respond appropriately to additional meme number.\n' +
-	'2020/03/31\n' +
-	'• Improved error logging.\n' +
-	'• Fixed bug where users couldn\'t be shamed.\n' +
-	'2020/03/23\n' +
-	'• Minecraft server changes will now properly update the topic.\n' +
-	'• Fixed pluralization error in taboo response.\n' +
-	'2020/03/18\n' +
-	'• Added blackjack functionality.\n';
+	'• Bot now knows two meta-commands: quietly and loudly.';
 
 module.exports=run;

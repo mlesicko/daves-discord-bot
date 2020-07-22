@@ -1,16 +1,17 @@
 const { logError } = require('../errorLogging.js');
 
-const run = ({messageText, sendMessage, db, message, myId}) => {
+const run = ({channel, messageText, sendMessage, db, message, myId}) => {
 	const tokens = messageText.split(' ');
 	const command = tokens.length > 0 && tokens[0].toLowerCase();
+	const channelId = channel.id;
 	if (tokens.length === 1 && command === 'shame') {
-		getShameList(message.channel.id, sendMessage, db);
+		getShameList(channelId, sendMessage, db);
 		return true;
 	} else if (command === 'shame') {
-		addShame(sendMessage, db, message, myId);
+		addShame(channelId, sendMessage, db, message, myId);
 		return true;
 	} else if (command === 'unshame') {
-		removeShame(sendMessage, db, message, myId);
+		removeShame(channelId, sendMessage, db, message, myId);
 		return true;
 	} else {
 		return false;
@@ -34,9 +35,8 @@ const getShameList = (channelId, sendMessage, db) => {
 	}
 }
 
-const addShame = (sendMessage, db, message, myId) => {
+const addShame = (channelId, sendMessage, db, message, myId) => {
 	try {
-		const channelId = message.channel.id;
 		const usersToShame = message.mentions.users
 			.filter(user => user.id !== myId)
 			.map(user => ({
@@ -59,9 +59,8 @@ const addShame = (sendMessage, db, message, myId) => {
 	}
 }
 
-const removeShame = (sendMessage, db, message, myId) => {
+const removeShame = (channelId, sendMessage, db, message, myId) => {
 	try {
-		const channelId = message.channel.id;
 		const usersToUnshame = message.mentions.users
 			.filter(user => user.id !== myId)
 			.map(user => ({

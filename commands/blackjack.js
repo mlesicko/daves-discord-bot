@@ -1,10 +1,10 @@
 const _ = require('lodash');
 
-const run = ({messageText, sendMessage, message, myId}) => {
+const run = ({channel, messageText, sendMessage, message, myId}) => {
 	const tokens = messageText.split(' ');
 	const token0 = tokens.length > 0 && tokens[0].toLowerCase();
 	const token1 = tokens.length > 1 && tokens[1].toLowerCase();
-	const channelId = message.channel.id;
+	const channelId = channel.id;
 	const channelState = state[channelId];
 	const playerId = message.author.id;
 	if ((token0 === 'blackjack') ||
