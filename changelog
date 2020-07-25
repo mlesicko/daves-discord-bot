@@ -1,3 +1,5 @@
+2020/07/24
+• Minecraft functionality removed in favor of a dedicated Minecraft bot.
 2020/07/22
 • Bot can execute commands on a different channel than it was invoked on.
 • Bot can handle multiple meta-commands on one command.
