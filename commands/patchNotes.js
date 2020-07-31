@@ -11,6 +11,9 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'2020/07/31\n' +
+	'• Edit bad commands into good ones!\n' +
+	'• Improved alarm handling.\n' +
 	'2020/07/24\n' +
 	'• Minecraft functionality removed in favor of a dedicated Minecraft bot.\n' +
 	'2020/07/22\n' +
