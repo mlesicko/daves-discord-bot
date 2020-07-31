@@ -1,11 +1,15 @@
 const genericAlarm = require('./genericAlarm.js');
+const { withErrorLogging } = require('../errorLogging.js');
 
 const alarms = [
 	genericAlarm,
 ];
 
-const start = (args) => alarms.forEach((alarm) => alarm.start(args));
+const start = (args) => {
+	const { client } = args;
+	alarms.forEach((alarm) =>
+        client.setInterval(withErrorLogging(alarm.checkAlarm), alarm.interval, args)
+	);
+}
 
-const stop = () => alarms.forEach((alarm) => alarm.stop());
-
-module.exports = {start, stop};
+module.exports = {start};

@@ -5,20 +5,9 @@ const second = 1000;
 const minute = second * 60;
 const alarmPaths = ['/events/']
 
-let alarmInterval;
+const interval = minute;
 
-const start = (args) => {
-	alarmInterval = runAndSetInterval(withErrorLogging(checkAlarms), minute, args);
-}
-
-const stop = () => {
-	if (alarmInterval != undefined) {
-		clearInterval(alarmInterval);
-	}
-	alarmInterval = undefined;
-}
-
-const checkAlarms = ({client, db}) => {
+const checkAlarm = ({client, db}) => {
 	alarmPaths.forEach((path) => checkAlarmsInPath(client, db, path));
 }
 
@@ -52,4 +41,4 @@ const triggerAlarm = (client, channelId, alarm) => {
 	).send(alarm.prefix + alarm.message);
 }
 
-module.exports={start, stop};
+module.exports={checkAlarm, interval};
