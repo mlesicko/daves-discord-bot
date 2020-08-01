@@ -55,9 +55,15 @@ const onMessage = (message) => {
 	}
 };
 
+const onMessageUpdate = (oldMessage, newMessage) => {
+	if (oldMessage.content !== newMessage.content) {
+		onMessage(newMessage);
+	}
+}
+
 client.on('ready', withErrorLogging(onReady));
 client.on('message', withErrorLogging(onMessage));
-client.on('messageUpdate', withErrorLogging((_, msg) => onMessage(msg)));
+client.on('messageUpdate', withErrorLogging(onMessageUpdate));
 client.on('error', logError);
 client.login(auth.token);
 
