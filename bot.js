@@ -32,6 +32,10 @@ const isCommand = (myId, message) => {
 	return tokens.length && tokens[0].match(new RegExp(`^<@!?${myId}>$`));
 }
 
+const cleanMessageText = (messageText) => {
+	return messageText.replace(/\s+/g, ' ')
+}
+
 const onMessage = (message) => {
 	const myId = client.user.id;
 	if (message.author.id === myId) {
@@ -42,7 +46,7 @@ const onMessage = (message) => {
 		sendMessage: (s) => s && message.channel.send(s),
 		react: (s) => message.react(s),
 		message,
-		messageText: message.content,
+		messageText: cleanMessageText(message.content),
 		channel: message.channel,
 		db,
 		myId
