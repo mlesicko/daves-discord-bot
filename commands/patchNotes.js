@@ -11,17 +11,12 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'2020/08/08\n' +
+	'• Bot ignores excessive   spaces.\n' +
 	'2020/07/31\n' +
 	'• Edit bad commands into good ones!\n' +
 	'• Improved alarm handling.\n' +
 	'2020/07/24\n' +
-	'• Minecraft functionality removed in favor of a dedicated Minecraft bot.\n' +
-	'2020/07/22\n' +
-	'• Bot can execute commands on a different channel than it was invoked on.\n' +
-	'• Bot can handle multiple meta-commands on one command.\n' +
-	'• Bot can tell when people are talking about it.\n' +
-	'• Bot can now mock you, if you want.\n' +
-	'2020/07/20\n' +
-	'• Bot now knows two meta-commands: quietly and loudly.';
+	'• Minecraft functionality removed in favor of a dedicated Minecraft bot.';
 
 module.exports=run;
