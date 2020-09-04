@@ -11,6 +11,8 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'2020/09/04\n' +
+	'• Bot can now make memes.\n' +
 	'2020/08/08\n' +
 	'• Bot ignores excessive   spaces.\n' +
 	'2020/07/31\n' +

@@ -11,6 +11,7 @@ const roll = require('./roll.js');
 const blackjack = require('./blackjack.js');
 const events = require('./events.js');
 const mute = require('./mute.js');
+const meme = require('./meme.js');
 const default_ = require('./default.js');
 
 const commandArray = [
@@ -27,6 +28,7 @@ const commandArray = [
 	blackjack,
 	events,
 	mute,
+	meme,
 	default_
 ];
 
