@@ -18,6 +18,7 @@ const helpMessage =
 	'@ delete event\n' +
 	'@ help\n' +
 	'@ kill yourself\n' +
+	'@ meme\n' +
 	'@ name\n' +
 	'@ add name\n' +
 	'@ report bug\n' +
