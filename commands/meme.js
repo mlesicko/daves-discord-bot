@@ -22,14 +22,16 @@ const makeMeme = async (memeText, author) => {
 	const background = await Canvas.loadImage('./assets/synthwave_background.jpg');
 	context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
-	writeTextToCanvas(memeText, canvas, context);
-
+	context.save();
 	context.beginPath();
 	context.arc(1220, 660, 50, 0, Math.PI * 2, true);
 	context.closePath();
 	context.clip();
 	const avatar = await Canvas.loadImage(author.avatarURL);
 	context.drawImage(avatar, 1170, 610, 100, 100);
+	context.restore()
+
+	writeTextToCanvas(memeText, canvas, context);
 
 	return canvas.toBuffer();
 }

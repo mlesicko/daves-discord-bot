@@ -51,7 +51,7 @@ const createEvent = (channelId, sendMessage, db, message) => {
 	}
 }
 
-const listEvents = (channelId, sendMessage, db, log) => {
+const listEvents = (channelId, sendMessage, db) => {
 	const events = getEvents(channelId, db);
 	if (events.length === 0) {
 		sendMessage('No upcoming events in this channel.');
@@ -62,7 +62,7 @@ const listEvents = (channelId, sendMessage, db, log) => {
 	}
 }
 
-const deleteEvents = (channelId, sendMessage, db, toDelete, log) => {
+const deleteEvents = (channelId, sendMessage, db, toDelete) => {
 	const events = getEvents(channelId, db);
 	let errorFlag = false;
 	toDelete.forEach((deleteIndex) => {
@@ -79,7 +79,7 @@ const deleteEvents = (channelId, sendMessage, db, toDelete, log) => {
 		sendMessage('No events deleted');
 	} else {
 		db.push('/events/' + channelId, updatedEvents, true);	
-		listEvents(channelId, sendMessage, db, log);
+		listEvents(channelId, sendMessage, db);
 	}
 }
 
