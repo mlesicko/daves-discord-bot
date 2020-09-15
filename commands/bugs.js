@@ -12,7 +12,7 @@ const run = ({messageText, sendMessage, db}) => {
 		reportBug(tokens.slice(2).join(' '), sendMessage, db);
 		return true;
 	} else if (
-		['bug','report-bug','bug-report'].includes(token0)
+		['bug','report-bug','bug-report', 'add-bug'].includes(token0)
 	) {
 		reportBug(tokens.slice(1).join(' '), sendMessage, db);
 		return true;
@@ -21,6 +21,20 @@ const run = ({messageText, sendMessage, db}) => {
 		messageText.toLowerCase() === 'list-bugs'
 	) {
 		listBugs(sendMessage, db);
+		return true;
+	} else if (
+		token0 === 'resolve-bug' ||
+		token0 === 'resolve-bugs' ||
+		token0 === 'delete-bug' ||
+		token0 === 'delete-bugs'
+	) {
+		deleteBugs(sendMessage, db, tokens.slice(1));
+		return true;
+	} else if (
+		token0 === 'delete' && (token1 === 'bug' || token1 === 'bugs') ||
+		token0 === 'resolve' && (token1 === 'bug' || token1 === 'bugs')
+	) {
+		deleteBugs(sendMessage, db, tokens.slice(2));
 		return true;
 	} else {
 		return false;
@@ -36,7 +50,7 @@ const listBugs = (sendMessage, db) => {
 	try {
 		const bugs = db.getData('/bugs');
 		if (bugs && bugs.length > 0) {
-			sendMessage(bugs.map((bug) => `• ${bug}`).join('\n'));
+			sendMessage(bugs.map((bug, idx) => `${idx +1}. ${bug}`).join('\n'));
 		} else {
 			sendMessage('No bugs have been reported');
 		}
@@ -45,5 +59,27 @@ const listBugs = (sendMessage, db) => {
 		sendMessage('No bugs have been reported');
 	}
 }
+
+const deleteBugs = (sendMessage, db, toDelete) => {
+	const bugs = db.getData('/bugs');
+	let errorFlag = false;
+	toDelete.forEach((deleteIndex) => {
+		if (bugs[deleteIndex - 1] != undefined) {
+			bugs[deleteIndex - 1] = null;
+		} else {
+			errorFlag = true;
+		}
+	});
+	const updatedBugs = bugs.filter((e) => e != null);
+	if (errorFlag) {
+		sendMessage('Please specify the bugs to be deleted by their numbers.');
+	} else if (bugs.length === updatedBugs.length) {
+		sendMessage('No bugs deleted');
+	} else {
+		db.push('/bugs', updatedBugs, true);
+		listBugs(sendMessage, db);
+	}
+}
+
 
 module.exports=run;

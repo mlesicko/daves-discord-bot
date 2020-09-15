@@ -11,14 +11,10 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'2020/09/15\n' +
+	'• User avatar appears behind meme text.\n' +
+	'• Ability to delete bugs through Discord.\n' +
 	'2020/09/04\n' +
-	'• Bot can now make memes.\n' +
-	'2020/08/08\n' +
-	'• Bot ignores excessive   spaces.\n' +
-	'2020/07/31\n' +
-	'• Edit bad commands into good ones!\n' +
-	'• Improved alarm handling.\n' +
-	'2020/07/24\n' +
-	'• Minecraft functionality removed in favor of a dedicated Minecraft bot.';
+	'• Bot can now make memes.\n';
 
 module.exports=run;
