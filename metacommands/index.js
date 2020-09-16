@@ -1,7 +1,8 @@
 const quietly = require('./quietly.js');
 const loudly = require('./loudly.js');
 const channel = require('./channel.js');
-const mocking = require ('./mocking.js');
+const mocking = require('./mocking.js');
+const replaceShorthands = require('./replaceShorthands');
 
 const metacommandArray = [
 	quietly,
@@ -24,7 +25,8 @@ const run = (state) => {
 			}
 		}
 	}
-	state.sendMessage = (m) => m && state.sendFn(state.transformFn(m))
+	state = replaceShorthands(state);
+	state.sendMessage = (m) => m && state.sendFn(state.transformFn(m));
 	return state;
 }
 
