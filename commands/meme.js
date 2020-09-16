@@ -1,12 +1,12 @@
 const Discord = require('discord.js');
 const Canvas = require('canvas');
 
-const run = ({messageText, channel, message}) => {
+const run = ({messageText, channel, message, transformFn}) => {
 	const tokens = messageText.split(' ');
 	const author = message.author;
 	if (tokens.length > 0 && tokens[0].toLowerCase() === 'meme') {
 		const memeText = tokens.slice(1).join(' ').trim();
-        makeMeme(memeText, author)
+        makeMeme(transformFn(memeText), author)
 			.then(meme => channel.send('', {files: [{attachment: meme}]}))
 			.catch(e => console.log(e));
 		return true;

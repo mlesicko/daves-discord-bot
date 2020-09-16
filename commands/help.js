@@ -33,7 +33,12 @@ const helpMessage =
 	'@ #[channel] [command]\n' +
 	'@ loudly [command]\n' +
 	'@ mocking [command]\n' +
-	'@ quietly [command]';
+	'@ quietly [command]\n' +
+	'\n' +
+	'I know these shorthands, which will be expanded into their longer forms' +
+	' before the command is evaluated:\n' +
+	'!has: "Has anyone really been far..."\n' +
+	'!navy: The Navy Seals copypasta\n';
 
 
 module.exports=run;

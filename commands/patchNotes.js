@@ -11,6 +11,9 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'2020/09/16\n' +
+	'• Shorthands for long pieces of text: !navy and !has.\n' +
+	'• meme command works with metacommands\n' +
 	'2020/09/15\n' +
 	'• User avatar appears behind meme text.\n' +
 	'• Ability to delete bugs through Discord.\n' +
