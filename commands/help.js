@@ -25,6 +25,9 @@ const helpMessage =
 	'@ roll\n' +
 	'@ shame\n' +
 	'@ unshame\n' +
+	'@ add shorthand [!shorthand] [text]\n' +
+	'@ delete shorthand [shorthand] (Note: This must be done with the !)\n' +
+	'@ list shorthands\n' +
 	'@ taboo\n' +
 	'@ untaboo\n' +
 	'@ what\'s new\n' +
@@ -33,12 +36,7 @@ const helpMessage =
 	'@ #[channel] [command]\n' +
 	'@ loudly [command]\n' +
 	'@ mocking [command]\n' +
-	'@ quietly [command]\n' +
-	'\n' +
-	'I know these shorthands, which will be expanded into their longer forms' +
-	' before the command is evaluated:\n' +
-	'!has: "Has anyone really been far..."\n' +
-	'!navy: The Navy Seals copypasta\n';
+	'@ quietly [command]';
 
 
 module.exports=run;

@@ -12,6 +12,7 @@ const blackjack = require('./blackjack.js');
 const events = require('./events.js');
 const mute = require('./mute.js');
 const meme = require('./meme.js');
+const shorthand = require('./shorthand.js');
 const default_ = require('./default.js');
 
 const commandArray = [
@@ -29,6 +30,7 @@ const commandArray = [
 	events,
 	mute,
 	meme,
+	shorthand,
 	default_
 ];
 

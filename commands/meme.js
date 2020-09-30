@@ -57,7 +57,7 @@ const writeTextToCanvas = (
 		...defaultTextConfig
 	};
 
-	const words = text.split(' ');
+	const words = text.replace(/\n/g, ' \n ').split(' ');
 	let buffer = words.length > 0 ? words[0] : '';
 	const lines = [];
 	
@@ -67,8 +67,13 @@ const writeTextToCanvas = (
 	context.fillStyle = textConfig.fillColor;
 
 	words.slice(1).forEach((word) => {
-		const tempBuffer = buffer + ' ' + word;
-		const width = context.measureText(tempBuffer).width + textConfig.margin * 2
+		if (word === '\n') {
+			lines.push(buffer);
+			buffer = '';
+			return;
+		}
+		const tempBuffer = (buffer.length > 0 ? buffer + ' ' : '') + word;
+		const width = context.measureText(tempBuffer).width + textConfig.margin * 2;
 		if (width < canvas.width) {
 			buffer = tempBuffer;
 		} else {

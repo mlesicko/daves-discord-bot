@@ -33,7 +33,7 @@ const isCommand = (myId, message) => {
 }
 
 const cleanMessageText = (messageText) => {
-	return messageText.replace(/\s+/g, ' ')
+	return messageText.replace(/' '+/g, ' ')
 }
 
 const onMessage = (message) => {

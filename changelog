@@ -1,6 +1,9 @@
+2020/09/30
+• Shorthands are now dynamic rather than hardcoded.
+• meme command now honors line breaks in input.
 2020/09/16
 • Shorthands for long pieces of text: !navy and !has.
-• meme command works with metacommands
+• meme command works with metacommands.
 2020/09/15
 • User avatar appears behind meme text.
 • Ability to delete bugs through Discord.
