@@ -5,6 +5,16 @@ const taboo = require('./taboo.js');
 const leaf = require('./leaf.js');
 const named = require('./named.js');
 
+/**
+* Responses are for anything the bot does in response to Discord messages
+* that are not commands.
+*
+* Responses should export their run function. This function should return
+* True if they were invoked and want to block any subsequent responses from
+* firing, or False if they were not invoked or were invoked but do not need
+* to block subsequent responses.
+*/
+
 const commandArray = [
 	// Blocking
 	shame,
