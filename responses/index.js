@@ -27,14 +27,9 @@ const commandArray = [
 ];
 
 const run = (state) => {
-	const selection = commandArray.find(
+	commandArray.find(
 		(f) => f(state)
 	);
-	if (selection) {
-		return true;
-	} else {
-		return false;
-	}
 }
 
 module.exports=run;
