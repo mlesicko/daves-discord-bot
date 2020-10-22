@@ -2,6 +2,7 @@ const quietly = require('./quietly.js');
 const loudly = require('./loudly.js');
 const channel = require('./channel.js');
 const mocking = require('./mocking.js');
+const uwu = require('./uwu.js');
 const replaceShorthands = require('./replaceShorthands');
 
 /**
@@ -29,6 +30,7 @@ const metacommandArray = [
 	loudly,
 	channel,
 	mocking,
+	uwu,
 ];
 
 const run = (state) => {
