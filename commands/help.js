@@ -26,7 +26,7 @@ const helpMessage =
 	'@ shame\n' +
 	'@ unshame\n' +
 	'@ add shorthand [!shorthand] [text]\n' +
-	'@ delete shorthand [shorthand] (Note: This must be done with the !)\n' +
+	'@ delete shorthand [shorthand] (Note: This must be done without the !)\n' +
 	'@ list shorthands\n' +
 	'@ taboo\n' +
 	'@ untaboo\n' +
@@ -36,7 +36,8 @@ const helpMessage =
 	'@ #[channel] [command]\n' +
 	'@ loudly [command]\n' +
 	'@ mocking [command]\n' +
-	'@ quietly [command]';
+	'@ quietly [command]\n' +
+	'@ uwu [command]';
 
 
 module.exports=run;

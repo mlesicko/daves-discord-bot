@@ -11,6 +11,8 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'2020/10/22\n' +
+	'• uwu metacommand\n' +
 	'2020/09/30\n' +
 	'• Shorthands are now dynamic rather than hardcoded.\n' +
 	'• meme command now honors line breaks in input.\n' +
