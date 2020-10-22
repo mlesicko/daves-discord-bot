@@ -13,10 +13,8 @@ const run = (state) => {
 				messageText = messageText.replace(re, shorthands[shorthand]);
 			}
 		});
-		return {
-			...state,
-			messageText
-		};
+		state.messageText = messageText;
+		return true;
 	} catch (e) {
 		logError(e);
 		return state;

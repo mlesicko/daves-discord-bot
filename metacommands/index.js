@@ -9,8 +9,9 @@ const replaceShorthands = require('./replaceShorthands');
 * invoked in the form @Bot [metacommands...] [command].
 *
 * Metacommands should export their run function. If the metacommand was
-* invoked, this function should return an updated state that will appropriately
-* alter the way the command will be executed, otherwise it should return false.
+* invoked, this function should update the state object to appropriately
+* alter the way the command will be executed and return true, otherwise
+* it should return false.
 *
 * replaceShorthands is a special metacommand that will always be executed
 * last. This will replace any shorthands in the message with their expanded
@@ -31,21 +32,16 @@ const metacommandArray = [
 ];
 
 const run = (state) => {
-	state.transformFn = (s) => s;
-	state.sendFn = (s) => state.message.channel.send(s);
 	let updated = true;
 	while(updated) {
 		updated = false;
 		for (const metacommand of metacommandArray) {
-			result = metacommand(state);
-			if (result) {
-				state = result;
+			if (metacommand(state)) {
 				updated = true;
 			}
 		}
 	}
-	state = replaceShorthands(state);
-	state.sendMessage = (m) => m && state.sendFn(state.transformFn(m));
+	replaceShorthands(state);
 	return state;
 }
 

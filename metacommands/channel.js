@@ -2,11 +2,12 @@ const run = (state) => {
     const tokens = state.messageText.split(' ');
     const token0 = tokens.length > 0 && tokens[0].toLowerCase();
 	if (token0 && token0.match(/^<#[0-9]+>$/)) {
-		return updateForChannel(
+		updateForChannel(
 			getChannelById(token0.slice(2,-1), state),
 			tokens.slice(1).join(' '),
 			state
 		);
+		return true;
 	} else {
 		return false;
 	}
@@ -22,13 +23,9 @@ const getChannelById = (channelId, state) => {
 }
 
 const updateForChannel = (channel, messageText, state) => {
-	const sendFn = (message) => channel.send(message);
-	return {
-		...state,
-		messageText,
-		sendFn,
-		channel
-	};
+	state.sendFn = (message) => channel.send(message);
+	state.channel = channel;
+	state.messageText = messageText;
 }
 
 module.exports=run;

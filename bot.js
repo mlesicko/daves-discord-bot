@@ -6,13 +6,12 @@ const responses = require('./responses/index.js');
 const commands = require('./commands/index.js');
 const metacommands = require('./metacommands/index.js');
 const alarms = require('./alarms/index.js');
+const MessageActionState = require('./MessageActionState.js');
 const {log, logError, withErrorLogging} = require('./errorLogging.js');
 
 //initialize Discord Bot
 const client = new Discord.Client();
 const db = new JsonDB(new Config('data', true, true, '/'));
-
-let muted = false;
 
 const onReady = () => {
 	log(`Logged in as ${client.user.tag}`);
@@ -27,32 +26,12 @@ const isMuted = () => {
 	}
 }
 
-const isCommand = (myId, message) => {
-	const tokens = message.content.split(' ');
-	return tokens.length && tokens[0].match(new RegExp(`^<@!?${myId}>$`));
-}
-
-const cleanMessageText = (messageText) => {
-	return messageText.replace(/' '+/g, ' ')
-}
-
 const onMessage = (message) => {
-	const myId = client.user.id;
-	if (message.author.id === myId) {
+	if (message.author.id === client.user.id) {
 		return;
 	}
-	const state = {
-		client,
-		sendMessage: (s) => s && message.channel.send(s),
-		react: (s) => message.react(s),
-		message,
-		messageText: cleanMessageText(message.content),
-		channel: message.channel,
-		db,
-		myId
-	};
-	if (isCommand(myId, message)) {
-		state.messageText = state.messageText.split(' ').slice(1).join(' ');
+	const state = new MessageActionState(client, message, db);
+	if (state.isCommand) {
 		commands(metacommands(state));
 	} else if (!isMuted()){
 		responses(state);
