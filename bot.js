@@ -5,6 +5,7 @@ const auth = require('./auth.json');
 const responses = require('./responses/index.js');
 const commands = require('./commands/index.js');
 const metacommands = require('./metacommands/index.js');
+const emojis = require('./emojis/index.js');
 const alarms = require('./alarms/index.js');
 const MessageActionState = require('./MessageActionState.js');
 const {log, logError, withErrorLogging} = require('./errorLogging.js');
@@ -44,9 +45,14 @@ const onMessageUpdate = (oldMessage, newMessage) => {
 	}
 }
 
+const onReaction = (reaction, user) => {
+	emojis({client, db, reaction, user});
+}
+
 client.on('ready', withErrorLogging(onReady));
 client.on('message', withErrorLogging(onMessage));
 client.on('messageUpdate', withErrorLogging(onMessageUpdate));
+client.on('messageReactionAdd', withErrorLogging(onReaction));
 client.on('error', logError);
 client.login(auth.token);
 

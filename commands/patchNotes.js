@@ -11,6 +11,9 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'• 2021/02/08\n' +
+	'• Added emoji tracking.\n' +
+	'• 2021/01/30\n' +
 	'• Added alias "request feature" for "report bug".\n';
 
 module.exports=run;
