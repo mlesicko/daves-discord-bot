@@ -11,18 +11,9 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
-	'2020/10/22\n' +
-	'• uwu metacommand\n' +
-	'2020/09/30\n' +
-	'• Shorthands are now dynamic rather than hardcoded.\n' +
-	'• meme command now honors line breaks in input.\n' +
-	'2020/09/16\n' +
-	'• Shorthands for long pieces of text: !navy and !has.\n' +
-	'• meme command works with metacommands.\n' +
-	'2020/09/15\n' +
-	'• User avatar appears behind meme text.\n' +
-	'• Ability to delete bugs through Discord.\n' +
-	'2020/09/04\n' +
-	'• Bot can now make memes.\n';
+	'• 2021/02/08\n' +
+	'• Added emoji tracking.\n' +
+	'• 2021/01/30\n' +
+	'• Added alias "request feature" for "report bug".\n';
 
 module.exports=run;

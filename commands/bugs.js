@@ -17,6 +17,16 @@ const run = ({messageText, sendMessage, db}) => {
 		reportBug(tokens.slice(1).join(' '), sendMessage, db);
 		return true;
 	} else if (
+		token0 === 'request' && token1 === 'feature'
+	) {
+		reportBug(tokens.slice(2).join(' '), sendMessage, db, 'Requested feature');
+		return true;
+	} else if (
+		token0 === 'request-feature'
+	) {
+		reportBug(tokens.slice(1).join(' '), sendMessage, db, 'Requested feature');
+		return true;
+	} else if (
 		messageText.toLowerCase() === 'list bugs' ||
 		messageText.toLowerCase() === 'list-bugs'
 	) {
@@ -41,9 +51,9 @@ const run = ({messageText, sendMessage, db}) => {
 	}
 }
 
-const reportBug = (bug, sendMessage, db) => {
+const reportBug = (bug, sendMessage, db, message='Added bug') => {
 	db.push('/bugs', [bug], false);
-	sendMessage('Added bug: ' + bug);
+	sendMessage(`${message}: ${bug}`);
 }
 
 const listBugs = (sendMessage, db) => {
