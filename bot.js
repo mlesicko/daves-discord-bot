@@ -37,6 +37,7 @@ const onMessage = (message) => {
 	} else if (!isMuted()){
 		responses(state);
 	}
+	emojis.track_message({db, message});
 };
 
 const onMessageUpdate = (oldMessage, newMessage) => {
@@ -46,7 +47,7 @@ const onMessageUpdate = (oldMessage, newMessage) => {
 }
 
 const onReaction = (reaction, user) => {
-	emojis({client, db, reaction, user});
+	emojis.track_react({db, reaction});
 }
 
 client.on('ready', withErrorLogging(onReady));
