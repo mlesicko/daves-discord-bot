@@ -1,3 +1,6 @@
+2021/02/18
+• Track emojis in messages as well as reacts.
+• Update tracked emoji names if they change on the server.
 2021/02/08
 • Added emoji tracking.
 2021/01/30

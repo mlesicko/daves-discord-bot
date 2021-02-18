@@ -6,22 +6,28 @@ const { logError } = require('../errorLogging.js');
 **/
 
 
-const run = (state) => {
-	track(state)
-}
-
-const track = ({reaction, db}) => {
+const track_react = ({reaction, db}) => {
 	guild = reaction.message.channel.guild;
 	if (guild) {
 		emoji_id = reaction._emoji.id;
-		emoji = guild.emojis.get(emoji_id);
-		if (emoji) {
-			update_database(db, guild.id, guild.emojis, emoji);
+		if (guild.emojis.get(emoji_id)) {
+			update_database(db, guild.id, guild.emojis, [emoji_id]);
 		}
 	}
 }
 
-const update_database = (db, guild_id, guild_emojis, emoji) => {
+const track_message = ({message, db}) => {
+	guild = message.channel.guild;
+	if (guild) {
+		emoji_ids = [...message.content.matchAll(/<:.+?:(\d+)>/g)].map(e => e[1]);
+		tracked_emoji_ids = emoji_ids.filter(emoji => guild.emojis.get(emoji));
+		if (tracked_emoji_ids.length > 0) {
+			update_database(db, guild.id, guild.emojis, tracked_emoji_ids);
+		}
+	}
+}
+
+const update_database = (db, guild_id, guild_emojis, emoji_ids) => {
 	const path = '/emojis/' + guild_id;
 	try {
 		// Prep the database in case this is the first time
@@ -30,19 +36,22 @@ const update_database = (db, guild_id, guild_emojis, emoji) => {
 		const updated_db = {};
 		for ([guild_emoji_id, guild_emoji] of guild_emojis) {
 			if (guild_emoji_id in emoji_db) {
-				if (guild_emoji_id === emoji.id) {
+				if (emoji_ids.includes(guild_emoji_id)) {
 					// This is the emoji, and we have seen it before: increment
 					updated_db[guild_emoji_id] = {
-						...emoji_db[guild_emoji_id],
+						'name': guild_emoji.name,
 						'count': emoji_db[guild_emoji_id]['count'] + 1,
 						'last_used': Date.now()
 					};
 				} else {
 					// This emoji has been seen before and needs no update
-					updated_db[guild_emoji_id]= emoji_db[guild_emoji_id];
+					updated_db[guild_emoji_id]= {
+						...emoji_db[guild_emoji_id],
+						'name': guild_emoji.name
+					}
 				}
 			} else {
-				if (guild_emoji_id === emoji.id) {
+				if (emoji_ids.includes(guild_emoji_id)) {
 					// This is the first time we're seeing this emoji
 					updated_db[guild_emoji_id] = {
 						'name': guild_emoji.name,
@@ -65,4 +74,4 @@ const update_database = (db, guild_id, guild_emojis, emoji) => {
 	}
 }
 
-module.exports=run;
+module.exports={track_react, track_message};
