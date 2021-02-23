@@ -11,6 +11,8 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'2021/02/23\n' +
+	'• Updated default message.\n' +
 	'2021/02/18\n' +
 	'• Track emojis in messages as well as reacts.\n' +
 	'• Update tracked emoji names if they change on the server.\n' +
