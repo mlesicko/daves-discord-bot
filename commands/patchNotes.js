@@ -11,6 +11,8 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
+	'2021/04/06\n' +
+	'• Bot will react :nice: instead of saying "Nice!" if nice react exists.\n' +
 	'2021/02/23\n' +
 	'• Updated default message.\n' +
 	'2021/02/18\n' +
