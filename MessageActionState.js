@@ -11,7 +11,7 @@ class MessageActionState {
 		this.sendFn = (s) => message.channel.send(s);
 		this.transformFn = (s) => s;
 
-        this.messageText = message.content.replace(/' '+/g, ' ')
+        this.messageText = message.content.replace(/ +/g, ' ')
         if (this.isCommand) {
             this.messageText = this.messageText.split(' ').slice(1).join(' ');
         }
