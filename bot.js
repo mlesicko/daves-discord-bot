@@ -3,6 +3,7 @@ const { JsonDB } = require('node-json-db');
 const { Config } = require('node-json-db/dist/lib/JsonDBConfig');
 const auth = require('./auth.json');
 const responses = require('./responses/index.js');
+const embedResponses = require('./responses/embedResponses.js');
 const commands = require('./commands/index.js');
 const metacommands = require('./metacommands/index.js');
 const emojis = require('./emojis/index.js');
@@ -40,9 +41,22 @@ const onMessage = (message) => {
 	emojis.track_message({db, message});
 };
 
+const onMessageEmbedsUpdate = (message) => {
+    if (message.author.id === client.user.id) {
+        return;
+    }
+    const state = new MessageActionState(client, message, db);
+    if (!state.isCommand && !isMuted()) {
+        embedResponses(state);
+    }
+
+}
+
 const onMessageUpdate = (oldMessage, newMessage) => {
 	if (oldMessage.content !== newMessage.content) {
 		onMessage(newMessage);
+	} else if (oldMessage.embeds.length !== newMessage.embeds.length) {
+		onMessageEmbedsUpdate(newMessage)
 	}
 }
 
