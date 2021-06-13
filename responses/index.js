@@ -4,6 +4,7 @@ const shame = require('./shame.js');
 const taboo = require('./taboo.js');
 const leaf = require('./leaf.js');
 const named = require('./named.js');
+const enjoyMeme = require('./enjoyMeme');
 
 /**
 * Responses are for anything the bot does in response to Discord messages
@@ -23,7 +24,8 @@ const commandArray = [
 	// Non-blocking
 	sixtyNine,
 	oldTownRoad,
-	leaf
+	leaf,
+	enjoyMeme
 ];
 
 const run = (state) => {
