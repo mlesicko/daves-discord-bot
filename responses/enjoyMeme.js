@@ -2,7 +2,7 @@ const run = ({message, react, db}) => {
 	const memeChannels = getMemeChannels(db);
 	const channelId = message.channel.id;
 	if (memeChannels.includes(channelId) && isMeme(message)) {
-		react('😂');
+		react('😆');
 	}
 	return false;
 }
