@@ -7,24 +7,24 @@ const { logError } = require('../errorLogging.js');
 
 
 const track_react = ({reaction, db}) => {
+	emoji_id = reaction.emoji.id;
 	guild = reaction.message.channel.guild;
-	if (guild) {
-		emoji_id = reaction._emoji.id;
-		if (guild.emojis.get(emoji_id)) {
-			update_database(db, guild.id, guild.emojis, [emoji_id]);
+	guild?.emojis?.fetch()?.then((emojis) => {
+		if (emojis.get(emoji_id)) {
+			update_database(db, guild.id, emojis, [emoji_id]);
 		}
-	}
+	});
 }
 
 const track_message = ({message, db}) => {
 	guild = message.channel.guild;
-	if (guild) {
+	guild?.emojis?.fetch()?.then((emojis) => {
 		emoji_ids = [...message.content.matchAll(/<:.+?:(\d+)>/g)].map(e => e[1]);
-		tracked_emoji_ids = emoji_ids.filter(emoji => guild.emojis.get(emoji));
+		tracked_emoji_ids = emoji_ids.filter(emoji => emojis.get(emoji));
 		if (tracked_emoji_ids.length > 0) {
-			update_database(db, guild.id, guild.emojis, tracked_emoji_ids);
+			update_database(db, guild.id, emojis, tracked_emoji_ids);
 		}
-	}
+	});
 }
 
 const update_database = (db, guild_id, guild_emojis, emoji_ids) => {

@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { Client, Intents } = require('discord.js');
 const { JsonDB } = require('node-json-db');
 const { Config } = require('node-json-db/dist/lib/JsonDBConfig');
 const auth = require('./auth.json');
@@ -12,12 +12,23 @@ const MessageActionState = require('./MessageActionState.js');
 const {log, logError, withErrorLogging} = require('./errorLogging.js');
 
 //initialize Discord Bot
-const client = new Discord.Client();
+const client = new Client({
+	intents: [
+		Intents.FLAGS.GUILDS,
+		Intents.FLAGS.GUILD_MESSAGES,
+		Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+		Intents.FLAGS.DIRECT_MESSAGES
+	],
+	partials: ['CHANNEL']
+});
 const db = new JsonDB(new Config('data', true, true, '/'));
 
 const onReady = () => {
 	log(`Logged in as ${client.user.tag}`);
-	alarms.start({client, db});
+	// TODO: client no longer has setInterval function, so I have to handle it myself
+	// "Since timers now have an unref method in Node, this is no longer required."
+	// https://nodejs.org/api/timers.html#timers_immediate_unref
+	//alarms.start({client, db});
 };
 
 const isMuted = () => {
@@ -65,7 +76,7 @@ const onReaction = (reaction, user) => {
 }
 
 client.on('ready', withErrorLogging(onReady));
-client.on('message', withErrorLogging(onMessage));
+client.on('messageCreate', withErrorLogging(onMessage));
 client.on('messageUpdate', withErrorLogging(onMessageUpdate));
 client.on('messageReactionAdd', withErrorLogging(onReaction));
 client.on('error', logError);
