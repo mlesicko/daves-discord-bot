@@ -36,9 +36,8 @@ const updateAlarms = (db, alarmsObject, path) => {
 }
 
 const triggerAlarm = (client, channelId, alarm) => {
-	client.channels.find(
-		(channel) => channel.id === channelId
-	).send(alarm.prefix + alarm.message);
+	client.channels.fetch(channelId)
+		.then((channel) => channel.send(alarm.prefix + alarm.message));
 }
 
 module.exports={checkAlarm, interval};
