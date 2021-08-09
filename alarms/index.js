@@ -18,11 +18,14 @@ const alarms = [
 	genericAlarm,
 ];
 
+let alarmInstances = [];
+
 const start = (args) => {
 	const { client } = args;
-	alarms.forEach((alarm) =>
-        client.setInterval(withErrorLogging(alarm.checkAlarm), alarm.interval, args)
+	alarmInstances.forEach((alarmInstance) => clearInterval(alarmInstance));
+	alarmInstances = alarms.map((alarm) =>
+        setInterval(withErrorLogging(alarm.checkAlarm), alarm.interval, args)
 	);
-}
+};
 
 module.exports = {start};

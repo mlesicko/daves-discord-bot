@@ -25,10 +25,7 @@ const db = new JsonDB(new Config('data', true, true, '/'));
 
 const onReady = () => {
 	log(`Logged in as ${client.user.tag}`);
-	// TODO: client no longer has setInterval function, so I have to handle it myself
-	// "Since timers now have an unref method in Node, this is no longer required."
-	// https://nodejs.org/api/timers.html#timers_immediate_unref
-	//alarms.start({client, db});
+	alarms.start({client, db});
 };
 
 const isMuted = () => {
