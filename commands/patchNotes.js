@@ -11,16 +11,9 @@ const run = ({messageText, sendMessage}) => {
 }
 
 const patchNotes =
-	'2021/04/06\n' +
-	'• Bot will react :nice: instead of saying "Nice!" if nice react exists.\n' +
-	'2021/02/23\n' +
-	'• Updated default message.\n' +
-	'2021/02/18\n' +
-	'• Track emojis in messages as well as reacts.\n' +
-	'• Update tracked emoji names if they change on the server.\n' +
-	'2021/02/08\n' +
-	'• Added emoji tracking.\n' +
-	'2021/01/30\n' +
-	'• Added alias "request feature" for "report bug".\n';
+	'2021/10/04\n' +
+	'• Slash command to report emoji usage.\n';
+	'2021/10/04\n' +
+	'• First supported slash command: Patch notes!\n';
 
 module.exports=run;

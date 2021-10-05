@@ -8,6 +8,7 @@ const commands = require('./commands/index.js');
 const metacommands = require('./metacommands/index.js');
 const emojis = require('./emojis/index.js');
 const alarms = require('./alarms/index.js');
+const slashCommands = require('./slashCommands/index.js');
 const MessageActionState = require('./MessageActionState.js');
 const {log, logError, withErrorLogging} = require('./errorLogging.js');
 
@@ -72,10 +73,22 @@ const onReaction = (reaction, user) => {
 	emojis.track_react({db, reaction});
 }
 
+const onInteraction = (interaction) => {
+	if (interaction.isCommand()) {
+		const state = {
+			client,
+			interaction,
+			db
+		};
+		slashCommands(state);
+	}
+}
+
 client.on('ready', withErrorLogging(onReady));
 client.on('messageCreate', withErrorLogging(onMessage));
 client.on('messageUpdate', withErrorLogging(onMessageUpdate));
 client.on('messageReactionAdd', withErrorLogging(onReaction));
+client.on('interactionCreate', withErrorLogging(onInteraction));
 client.on('error', logError);
 client.login(auth.token);
 
