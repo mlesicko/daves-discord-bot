@@ -7,9 +7,13 @@ const run = ({interaction, client, db}) => {
 	if (emojiData.length === 0) {
 		interaction.reply("No emoji data found");
 		return;
+	} else {
+		interaction.reply("Generating report...");
+		client.channels.fetch(interaction.channelId).then((channel) => {
+			const send = (s) => channel.send(s);
+			partitionReplies(makeReport(emojiData, client), send);
+		});
 	}
-
-	interaction.reply(makeReport(emojiData, client));
 }
 
 const getEmojiData = (guild, db) => {
@@ -40,6 +44,22 @@ const formatEmojiData = (emojiData, client) => {
 const makeReport = (data, client) => {
 	const sortedData = data.sort((e1, e2) => e2.last_used - e1.last_used);
 	return sortedData.map((e) => formatEmojiData(e, client)).join('');
+}
+
+const partitionReplies = (message, send, partitionMaxLength = 1000) => {
+	const lines = message.split('\n').filter((s) => s.length > 0);
+	let partition = '';
+	lines.forEach((line) => {
+		if (partition.length + line.length > partitionMaxLength) {
+			send(partition);
+			partition = line;
+		} else {
+			partition += '\n' + line;
+		}
+	});
+	if (partition.length > 0) {
+		send(partition);
+	}
 }
 
 module.exports={ description, run };
