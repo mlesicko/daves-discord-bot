@@ -62,7 +62,7 @@ const update_database = (db, guild_id, guild_emojis, emoji_ids) => {
 					// This emoji is new to the guild, and has never been used
 					updated_db[guild_emoji_id] = {
 						'name': guild_emoji.name,
-						'count': guild_emoji_id === emoji.id ? 1 : 0,
+						'count': 0,
 						'last_used': null
 					};
 				}

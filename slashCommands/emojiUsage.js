@@ -18,7 +18,11 @@ const run = ({interaction, client, db}) => {
 
 const getEmojiData = (guild, db) => {
 	try {
-		return Object.values(db.getData(`/emojis/${guild}`));
+		const emojiObject = db.getData(`/emojis/${guild}`);
+		return Object.keys(emojiObject).map((key) => ({
+			id: key,
+			...emojiObject[key]
+		}));
 	} catch (e) {
 		return [];
 	}
@@ -30,7 +34,7 @@ const formatDate = (timestamp) => {
 }
 
 const formatEmojiData = (emojiData, client) => { 
-	const emoji = client.emojis.cache.find(emoji => emoji.name === emojiData.name);
+	const emoji = client.emojis.cache.get(emojiData.id);
 	if (emoji) {
 		return `${emoji} ` +
 			`\`:${emojiData.name}:\` — ` +
