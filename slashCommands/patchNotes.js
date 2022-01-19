@@ -1,13 +1,13 @@
-const description = "Print latest patch notes.";
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { PATCH_NOTES } = require("../assets/strings.js");
+
+const data = new SlashCommandBuilder()
+	.setName("patch_notes")
+	.setDescription("Print latest patch notes.")
+	.toJSON();
 
 const run = ({interaction}) => {
-	interaction.reply(patchNotes);
+	interaction.reply(PATCH_NOTES);
 }
 
-const patchNotes =
-	'2021/10/04\n' +
-	'• Slash command to report emoji usage.\n';
-	'2021/10/04\n' +
-	'• First supported slash command: Patch notes!\n';
-
-module.exports={ description, run };
+module.exports={ run, data };

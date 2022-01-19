@@ -5,20 +5,13 @@ const { token } = require('../auth.json');
 
 const rest = new REST({ version: '9' }).setToken(token);
 
-const getSlashCommandJson = (slashCommands) => 
-	Object.entries(slashCommands).map(([key, value]) => ({
-		name: key,
-		description: value.description,
-		options: value.options
-	}));
-
 const registerSlashCommands = async (slashCommands) => {
 	try {
 		console.log('Started refreshing application (/) commands.');
 
 		await rest.put(
 			Routes.applicationGuildCommands(client_id, guild_id),
-			{ body: getSlashCommandJson(slashCommands) },
+			{ body: slashCommands },
 		);
 
 		console.log('Successfully reloaded application (/) commands.');

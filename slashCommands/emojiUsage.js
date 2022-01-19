@@ -1,4 +1,9 @@
-const description = "Get emoji usage data";
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+const data = new SlashCommandBuilder()
+	.setName("emoji_usage")
+	.setDescription("Get emoji usage data")
+	.toJSON();
 
 const run = ({interaction, client, db}) => {
 	const reportType = interaction.options.getString("report");
@@ -66,4 +71,4 @@ const partitionReplies = (message, send, partitionMaxLength = 1000) => {
 	}
 }
 
-module.exports={ description, run };
+module.exports={ run, data };
