@@ -1,6 +1,7 @@
 const PATCH_NOTES = 
 	'2022/01/19\n' +
 	'• Slash command support for adding and retrieving names.\n' +
+	'• Slash command support for adding, listing, and deleting events.\n' +
 	'2021/10/04\n' +
 	'• Slash command to report emoji usage.\n' + 
 	'2021/10/04\n' +
