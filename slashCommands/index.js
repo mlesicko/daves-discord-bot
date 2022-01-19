@@ -4,15 +4,15 @@ const registerSlashCommands = require('./registerSlashCommands.js');
 
 const patchNotes = require('./patchNotes.js');
 const emojiUsage = require('./emojiUsage.js');
-const getName = require('./names/getName.js');
-const addName = require('./names/addName.js');
+const names = require('./names.js');
+const events = require('./events.js');
 
 
 const slashCommandsArray = [
 	patchNotes,
 	emojiUsage,
-	getName,
-	addName,
+	names,
+	events,
 ];
 
 const slashCommandsObj =
