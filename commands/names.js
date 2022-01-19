@@ -1,4 +1,5 @@
 const { logError } = require('../errorLogging.js');
+const { getRandInt } = require('../utils.js');
 
 const run = ({messageText, sendMessage, db}) => {
 	const tokens = messageText.split(' ');
@@ -35,8 +36,6 @@ const getName = (sendMessage, db) => {
 		sendMessage('I don\'t know any names.');
 	}
 }
-
-const getRandInt = (n) => Math.floor(Math.random() * Math.floor(n));
 
 const putName = (name, sendMessage, db) => {
 	db.push('/names', [name], false);
