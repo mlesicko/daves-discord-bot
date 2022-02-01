@@ -6,6 +6,7 @@ const patchNotes = require('./patchNotes.js');
 const emojiUsage = require('./emojiUsage.js');
 const names = require('./names.js');
 const events = require('./events.js');
+const echo = require('./echo.js');
 
 
 const slashCommandsArray = [
@@ -13,6 +14,7 @@ const slashCommandsArray = [
 	emojiUsage,
 	names,
 	events,
+	echo,
 ];
 
 const slashCommandsObj =
