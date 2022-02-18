@@ -1,10 +1,9 @@
 const PATCH_NOTES = 
 	'2022/02/18\n' +
 	'• Slash command support for rolling dice.\n' +
-	'2022/01/31\n' +
-	'• Slash command support for echo.\n' +
-	'2022/01/19\n' +
-	'• Slash command support for adding and retrieving names.\n' +
-	'• Slash command support for adding, listing, and deleting events.\n';
+	'• Slash command support for reporting and resolving bugs.\n' +
+	'• Slash command support for adding and receiving advice.\n' +
+	'• Slash command support for muting and unmuting bot.\n' +
+	'• Slash command support for tabooing and untabooing words.\n';
 
 module.exports = { PATCH_NOTES };
