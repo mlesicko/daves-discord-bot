@@ -7,6 +7,7 @@ const emojiUsage = require('./emojiUsage.js');
 const names = require('./names.js');
 const events = require('./events.js');
 const echo = require('./echo.js');
+const roll = require('./roll.js');
 
 
 const slashCommandsArray = [
@@ -15,6 +16,7 @@ const slashCommandsArray = [
 	names,
 	events,
 	echo,
+	roll,
 ];
 
 const slashCommandsObj =
