@@ -1,5 +1,9 @@
 2022/02/18
 • Slash command support for rolling dice.
+• Slash command support for reporting and resolving bugs.
+• Slash command support for adding and receiving advice.
+• Slash command support for muting and unmuting bot.
+• Slash command support for tabooing and untabooing words.
 2022/01/31
 • Slash command support for echo.
 2022/01/19
