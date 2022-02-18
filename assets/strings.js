@@ -1,4 +1,6 @@
 const PATCH_NOTES = 
+	'2022/02/18\n' +
+	'• Slash command support for rolling dice.\n' +
 	'2022/01/31\n' +
 	'• Slash command support for echo.\n' +
 	'2022/01/19\n' +
