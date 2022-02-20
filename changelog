@@ -1,6 +1,7 @@
 2022/02/19
 • Slash command support for generating memes.
 • Emoji report can be ordered by most recent or most popular.
+• Fixed bug that interfered with reactions to funny numbers.
 2022/02/18
 • Slash command support for rolling dice.
 • Slash command support for reporting and resolving bugs.
