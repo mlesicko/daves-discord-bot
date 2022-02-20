@@ -1,12 +1,21 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
+const MOST_RECENT = "most_recent";
+const MOST_POPULAR = "most_popular";
+
 const data = new SlashCommandBuilder()
 	.setName("emoji_usage")
 	.setDescription("Get emoji usage data")
+	.addStringOption(option =>
+		option.setName("report-type")
+			.setDescription("Type of emoji report to generate")
+			.addChoice("Most Recent", MOST_RECENT)
+			.addChoice("Most Popular", MOST_POPULAR)
+			.setRequired(false))
 	.toJSON();
 
 const run = ({interaction, client, db}) => {
-	const reportType = interaction.options.getString("report");
+	const reportType = interaction.options.getString("report-type") ?? MOST_POPULAR;
 	const emojiData = getEmojiData(interaction.guildId, db);
 
 	if (emojiData.length === 0) {
@@ -16,7 +25,7 @@ const run = ({interaction, client, db}) => {
 		interaction.reply("Generating report...");
 		client.channels.fetch(interaction.channelId).then((channel) => {
 			const send = (s) => channel.send(s);
-			partitionReplies(makeReport(emojiData, client), send);
+			partitionReplies(makeReport(emojiData, reportType, client), send);
 		});
 	}
 }
@@ -50,8 +59,12 @@ const formatEmojiData = (emojiData, client) => {
 	}
 }
 
-const makeReport = (data, client) => {
-	const sortedData = data.sort((e1, e2) => e2.last_used - e1.last_used);
+const makeReport = (data, reportType, client) => {
+	const sortFunction = {
+		[MOST_POPULAR]: (e1, e2) => e2.count - e1.count,
+		[MOST_RECENT]: (e1, e2) => e2.last_used - e1.last_used,
+	}[reportType];
+	const sortedData = data.sort(sortFunction);
 	return sortedData.map((e) => formatEmojiData(e, client)).join('');
 }
 

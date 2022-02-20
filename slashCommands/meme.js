@@ -1,18 +1,21 @@
-const Discord = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const Canvas = require('canvas');
 
-const run = ({messageText, channel, message, transformFn}) => {
-	const tokens = messageText.split(' ');
-	const author = message.author;
-	if (tokens.length > 0 && tokens[0].toLowerCase() === 'meme') {
-		const memeText = tokens.slice(1).join(' ').trim();
-        makeMeme(transformFn(memeText), author)
-			.then(meme => channel.send({files: [{attachment: meme}]}))
-			.catch(e => console.log(e));
-		return true;
-	} else {
-		return false;
-	}
+const data = new SlashCommandBuilder()
+	.setName("meme")
+	.setDescription("Create a meme image.")
+	.addStringOption(option =>
+		option.setName("text")
+			.setDescription("The text to use in the meme.")
+			.setRequired(true))
+	.toJSON();
+
+const run = ({ interaction }) => {
+	const text = interaction.options.getString("text");
+	interaction.reply({ content: "Generating meme...", ephemeral: true });
+	makeMeme(text, interaction.user)
+		.then(meme => interaction.channel.send({files: [{attachment: meme}]}))
+		.catch(e => console.log(e));
 }
 
 const makeMeme = async (memeText, author) => {
@@ -27,7 +30,7 @@ const makeMeme = async (memeText, author) => {
 	context.arc(1220, 660, 50, 0, Math.PI * 2, true);
 	context.closePath();
 	context.clip();
-	const avatar = await Canvas.loadImage(author.displayAvatarURL({format:"jpg"}));
+	const avatar = await Canvas.loadImage(author.displayAvatarURL({ format: "jpg" }));
 	context.drawImage(avatar, 1170, 610, 100, 100);
 	context.restore()
 
@@ -101,4 +104,4 @@ const writeTextToCanvas = (
 	});
 }
 
-module.exports=run;
+module.exports={ run, data };
