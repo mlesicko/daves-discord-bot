@@ -1,6 +1,6 @@
 const sixtyNine = require('./sixtyNine.js');
 const oldTownRoad = require('./oldTownRoad.js');
-const shame = require('./shame.js');
+const userStanding = require('./userStanding.js');
 const taboo = require('./taboo.js');
 const leaf = require('./leaf.js');
 const named = require('./named.js');
@@ -18,7 +18,7 @@ const enjoyMeme = require('./enjoyMeme');
 
 const commandArray = [
 	// Blocking
-	shame,
+	userStanding,
 	taboo,
 	named,
 	// Non-blocking

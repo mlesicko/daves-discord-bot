@@ -13,6 +13,7 @@ const names = require('./names.js');
 const patchNotes = require('./patchNotes.js');
 const roll = require('./roll.js');
 const taboo = require('./taboo.js');
+const userStanding = require('./userStanding');
 
 
 const slashCommandsArray = [
@@ -27,6 +28,7 @@ const slashCommandsArray = [
 	patchNotes,
 	roll,
 	taboo,
+	...userStanding,
 ];
 
 const slashCommandsObj =
