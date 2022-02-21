@@ -1,6 +1,5 @@
 const advice = require('./advice.js');
 const kys = require('./kys.js');
-const shame = require('./shame.js');
 const help = require('./help.js');
 const patchNotes = require('./patchNotes.js');
 const names = require('./names.js');
@@ -25,7 +24,6 @@ const default_ = require('./default.js');
 const commandArray = [
 	advice,
 	kys,
-	shame,
 	help,
 	patchNotes,
 	names,
