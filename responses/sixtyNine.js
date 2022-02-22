@@ -10,7 +10,8 @@ const run = ({messageText, sendMessage, react, channel}) => {
 const sendNice = (channel, react, sendMessage) => {
 	const nice = channel?.guild?.emojis?.cache?.find?.(e => e.name === 'nice');
 	if (nice) {
-		react(nice);
+		react(nice)
+			.catch((e) => sendMessage('Nice!'));
 	} else {
 		sendMessage('Nice!');
 	}

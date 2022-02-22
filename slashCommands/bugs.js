@@ -10,10 +10,18 @@ const data = new SlashCommandBuilder()
 		.addStringOption(option =>
 			option.setName("description")
 				.setDescription("A description of the bug")
-				.setRequired(true)))
+				.setRequired(true))
+		.addBooleanOption(option =>
+			option.setName("silent")
+				.setDescription("Set to true to perform action privately")
+				.setRequired(false)))
 	.addSubcommand(subcommand => subcommand
 		.setName("list")
-		.setDescription("List reported bugs"))
+		.setDescription("List reported bugs")
+		.addBooleanOption(option =>
+			option.setName("silent")
+				.setDescription("Set to true to perform action privately")
+				.setRequired(false)))
 	.addSubcommand(subcommand => subcommand
 		.setName("resolve")
 		.setDescription("Resolve a reported bug")
@@ -24,6 +32,10 @@ const data = new SlashCommandBuilder()
 		.addStringOption(option =>
 			option.setName("resolution")
 				.setDescription("Optional resolution information")
+				.setRequired(false))
+		.addBooleanOption(option =>
+			option.setName("silent")
+				.setDescription("Set to true to perform action privately")
 				.setRequired(false)))
 	.toJSON();
 
@@ -42,7 +54,8 @@ const run = ({interaction, db}) => {
 	} else {
 		response = "Error handling request";
 	}
-	interaction.reply(response);
+	const silent = interaction.options.getBoolean("silent");
+	interaction.reply({ content: response, ephemeral: !!silent });
 }
 
 const report_bug = (db, description) => {
