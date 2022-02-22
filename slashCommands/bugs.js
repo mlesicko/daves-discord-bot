@@ -1,42 +1,35 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { logError } = require('../errorLogging.js');
 
+const { with_silent, apply_silent } = require('./slashCommandTools');
+
 const data = new SlashCommandBuilder()
 	.setName("bug")
 	.setDescription("Record and track bugs in the bot.")
-	.addSubcommand(subcommand => subcommand
-		.setName("report")
-		.setDescription("report a bug")
-		.addStringOption(option =>
-			option.setName("description")
-				.setDescription("A description of the bug")
-				.setRequired(true))
-		.addBooleanOption(option =>
-			option.setName("silent")
-				.setDescription("Set to true to perform action privately")
-				.setRequired(false)))
-	.addSubcommand(subcommand => subcommand
-		.setName("list")
-		.setDescription("List reported bugs")
-		.addBooleanOption(option =>
-			option.setName("silent")
-				.setDescription("Set to true to perform action privately")
-				.setRequired(false)))
-	.addSubcommand(subcommand => subcommand
-		.setName("resolve")
-		.setDescription("Resolve a reported bug")
-		.addIntegerOption(option =>
-			option.setName("index")
-				.setDescription("The index of the bug to resolve")
-				.setRequired(true))
-		.addStringOption(option =>
-			option.setName("resolution")
-				.setDescription("Optional resolution information")
-				.setRequired(false))
-		.addBooleanOption(option =>
-			option.setName("silent")
-				.setDescription("Set to true to perform action privately")
-				.setRequired(false)))
+	.addSubcommand(subcommand => 
+		with_silent(subcommand
+			.setName("report")
+			.setDescription("report a bug")
+			.addStringOption(option =>
+				option.setName("description")
+					.setDescription("A description of the bug")
+					.setRequired(true))))
+	.addSubcommand(subcommand =>
+		with_silent(subcommand
+			.setName("list")
+			.setDescription("List reported bugs")))
+	.addSubcommand(subcommand =>
+		with_silent(subcommand
+			.setName("resolve")
+			.setDescription("Resolve a reported bug")
+			.addIntegerOption(option =>
+				option.setName("index")
+					.setDescription("The index of the bug to resolve")
+					.setRequired(true))
+			.addStringOption(option =>
+				option.setName("resolution")
+					.setDescription("Optional resolution information")
+					.setRequired(false))))
 	.toJSON();
 
 const run = ({interaction, db}) => {
@@ -54,8 +47,7 @@ const run = ({interaction, db}) => {
 	} else {
 		response = "Error handling request";
 	}
-	const silent = interaction.options.getBoolean("silent");
-	interaction.reply({ content: response, ephemeral: !!silent });
+	interaction.reply(apply_silent(interaction, response));
 }
 
 const report_bug = (db, description) => {

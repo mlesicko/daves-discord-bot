@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { logError } = require('../errorLogging.js');
 
+const { with_silent, apply_silent } = require('./slashCommandTools');
+
 const data = new SlashCommandBuilder()
 	.setName("macros")
 	.setDescription(
@@ -17,13 +19,10 @@ const data = new SlashCommandBuilder()
 			option.setName("content")
 				.setDescription("The content of the macro")
 				.setRequired(true)))
-	.addSubcommand(subcommand => subcommand
-		.setName("list")
-		.setDescription("List the registered macros")
-		.addBooleanOption(option =>
-			option.setName("silent")
-				.setDescription("Set to true to perform action privately")
-				.setRequired(false)))
+	.addSubcommand(subcommand =>
+		with_silent(subcommand
+			.setName("list")
+			.setDescription("List the registered macros")))
 	.addSubcommand(subcommand => subcommand
 		.setName("delete")
 		.setDescription("Delete a macro")
@@ -48,8 +47,7 @@ const run = ({interaction, db}) => {
 	} else {
 		response = "Error handling request";
 	}
-	const silent = interaction.options.getBoolean("silent");
-	interaction.reply({ content: response, ephemeral: !!silent });
+	interaction.reply(apply_silent(interaction, response));
 }
 
 const ensure_bang = (s) => s[0] !== "!" ? "!" + s.trim() : s.trim();

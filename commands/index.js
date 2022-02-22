@@ -1,6 +1,5 @@
 const kys = require('./kys.js');
 const bugs = require('./bugs.js');
-const echo = require('./echo.js');
 const blackjack = require('./blackjack.js');
 const default_ = require('./default.js');
 
@@ -14,7 +13,6 @@ const default_ = require('./default.js');
 const commandArray = [
 	kys,
 	bugs,
-	echo,
 	blackjack,
 	default_
 ];
