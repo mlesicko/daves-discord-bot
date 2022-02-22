@@ -10,7 +10,8 @@ const run = ({messageText, react, channel}) => {
 const sendLeaf = (channel, react) => {
 	const weed = channel?.guild?.emojis?.cache?.find?.(e => e.name === 'weed');
 	if (weed) {
-		react(weed);
+		react(weed)
+			.catch((e) => react('🍁'));
 	} else {
 		react('🍁');
 	}
