@@ -1,6 +1,7 @@
 const PATCH_NOTES = 
 	'2022/02/22\n' +
 	'• Slash command support for macros replaces older shorthand command.\n' +
+	'• Removed most old-style commands now that they\'ve been replaced with slash commands.\n'+
 	'2022/02/21\n' +
 	'• Slash command support for praise and shame.\n' +
 	'2022/02/19\n' +
