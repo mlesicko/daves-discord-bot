@@ -23,9 +23,6 @@ const helpMessage =
 	'@ add name\n' +
 	'@ report bug\n' +
 	'@ roll\n' +
-	'@ add shorthand [!shorthand] [text]\n' +
-	'@ delete shorthand [shorthand] (Note: This must be done without the !)\n' +
-	'@ list shorthands\n' +
 	'@ taboo\n' +
 	'@ untaboo\n' +
 	'@ what\'s new\n' +

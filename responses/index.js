@@ -5,6 +5,7 @@ const taboo = require('./taboo.js');
 const leaf = require('./leaf.js');
 const named = require('./named.js');
 const enjoyMeme = require('./enjoyMeme');
+const macros = require('./macros.js');
 
 /**
 * Responses are for anything the bot does in response to Discord messages
@@ -18,6 +19,7 @@ const enjoyMeme = require('./enjoyMeme');
 
 const commandArray = [
 	// Blocking
+	macros,
 	userStanding,
 	taboo,
 	named,
