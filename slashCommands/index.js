@@ -7,6 +7,7 @@ const bugs = require('./bugs.js');
 const echo = require('./echo.js');
 const events = require('./events.js');
 const emojiUsage = require('./emojiUsage.js');
+const macros = require('./macros.js');
 const meme = require('./meme.js');
 const mute = require('./mute.js');
 const names = require('./names.js');
@@ -22,6 +23,7 @@ const slashCommandsArray = [
 	echo,
 	emojiUsage,
 	events,
+	macros,
 	meme,
 	mute,
 	names,
