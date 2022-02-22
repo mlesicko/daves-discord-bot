@@ -5,7 +5,6 @@ const auth = require('./auth.json');
 const responses = require('./responses/index.js');
 const embedResponses = require('./responses/embedResponses.js');
 const commands = require('./commands/index.js');
-const metacommands = require('./metacommands/index.js');
 const emojis = require('./emojis/index.js');
 const alarms = require('./alarms/index.js');
 const slashCommands = require('./slashCommands/index.js');
@@ -43,7 +42,7 @@ const onMessage = (message) => {
 	}
 	const state = new MessageActionState(client, message, db);
 	if (state.isCommand) {
-		commands(metacommands(state));
+		commands(state);
 	} else if (!isMuted()){
 		responses(state);
 	}
