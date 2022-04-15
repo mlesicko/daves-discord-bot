@@ -15,6 +15,7 @@ const data = new SlashCommandBuilder()
 			.setDescription("The background to use for the meme.")
 			.addChoice("synthwave", "synthwave")
 			.addChoice("boomer post", "boomer_post")
+			.addChoice("space cowboy", "space_cowboy")
 			.setRequired(false))
 	.toJSON();
 
@@ -23,7 +24,7 @@ const backgroundDataMap = {
 		file: "synthwave_background.jpg",
 		config: {
 			height: 720,
-			width: 1280
+			width: 1280,
 		}
 	},
 	"boomer_post": {
@@ -37,8 +38,28 @@ const backgroundDataMap = {
 				strokeColor: '#0000',
 				fillColor: '#000',
 				strokWidth: 0,
+				yFunc: (canvasHeight,  lineIndex, lineCount) =>
+					200 + lineIndex * 50 - 10 * lineCount,
+			}
+		}
+	},
+	"space_cowboy": {
+		background_color: '#000',
+		config: {
+			height: 720,
+			width: 1080,
+			avatar_x: 10,
+			avatar_y: 10,
+			text: {
+				margin: 150,
+				font: 'bold italic 30px serif',
+				strokeColor: '#0000',
+				fillColor: '#fff',
+				strokeWidth: 0,
 				yFunc: (canvasHeight, lineIndex, lineCount) =>
-					200 + lineIndex * 50 - 10 * lineCount
+					canvasHeight - ((40) * (lineCount - lineIndex)),
+				xFunc: (canvasWidth, lineWidth, lineIndex, linesCount) =>
+					canvasWidth - lineWidth - 20
 			}
 		}
 	}
@@ -51,7 +72,9 @@ const defaultTextConfig = {
 	fillColor: '#00f2ffA0',
 	strokeWidth: 2.5,
 	yFunc: (canvasHeight, lineIndex, lineCount) =>
-		canvasHeight * ((lineIndex + 1) /  (lineCount + 1))
+		canvasHeight * ((lineIndex + 1) /  (lineCount + 1)),
+	xFunc: (canvasWidth, lineWidth, lineIndex, linesCount) =>
+		(canvasWidth / 2) - (lineWidth / 2)
 }
 
 const run = ({ interaction }) => {
@@ -75,21 +98,29 @@ const getBackground = (backgroundId) => {
 
 const makeMeme = async (memeText, backgroundId, author) => {
 	const background = getBackground(backgroundId);
-	const backgroundImage = await Canvas.loadImage(`./assets/${background.file}`);
 
 	const canvas = Canvas.createCanvas(
 		background.config.width, background.config.height
 	);
 	const context = canvas.getContext('2d');
-	context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
+	if (background.file) {
+		const backgroundImage = await Canvas.loadImage(`./assets/${background.file}`);
+		context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+	} else if (background.background_color) {
+		context.fillStyle = background.background_color;
+		context.fillRect(0, 0, canvas.width, canvas.height);
+	}
 
 	context.save();
 	context.beginPath();
-	context.arc(canvas.width - 60, canvas.height - 60, 50, 0, Math.PI * 2, true);
+	const avatar_x = background.config.avatar_x ?? canvas.width - 110;
+	const avatar_y = background.config.avatar_y ?? canvas.height - 110;
+	context.arc(avatar_x + 50, avatar_y + 50, 50, 0, Math.PI * 2, true);
 	context.closePath();
 	context.clip();
 	const avatar = await Canvas.loadImage(author.displayAvatarURL({ format: "jpg" }));
-	context.drawImage(avatar, canvas.width - 110, canvas.height - 110, 100, 100);
+	context.drawImage(avatar, avatar_x, avatar_y, 100, 100);
 	context.restore()
 
 	writeTextToCanvas(memeText, canvas, context, background.config?.text);
@@ -138,18 +169,11 @@ const writeTextToCanvas = (
 	}
 	
 	lines.forEach((line,idx) => {
-		y = textConfig.yFunc(canvas.height, idx, lines.length)
 		textMeasure = context.measureText(line);
-		context.fillText(
-			line, 
-			canvas.width / 2 - textMeasure.width / 2,
-			y
-		);
-		context.strokeText(
-			line, 
-			canvas.width / 2 - textMeasure.width / 2,
-			y,
-		);
+		x = textConfig.xFunc(canvas.width, textMeasure.width, idx, lines.length);
+		y = textConfig.yFunc(canvas.height, idx, lines.length);
+		context.fillText(line, x, y);
+		context.strokeText(line, x, y);
 	});
 }
 
