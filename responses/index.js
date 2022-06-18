@@ -6,6 +6,7 @@ const leaf = require('./leaf.js');
 const named = require('./named.js');
 const enjoyMeme = require('./enjoyMeme');
 const macros = require('./macros.js');
+const pleaseClap = require('./pleaseClap.js');
 
 /**
 * Responses are for anything the bot does in response to Discord messages
@@ -19,6 +20,7 @@ const macros = require('./macros.js');
 
 const commandArray = [
 	// Blocking
+	pleaseClap,
 	macros,
 	userStanding,
 	taboo,
