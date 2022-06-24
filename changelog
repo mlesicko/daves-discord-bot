@@ -1,3 +1,5 @@
+2022/06/24
+• Addressed crash that occur with bad network state during emoji tracking.
 2022/06/18
 • Added "Please clap" interaction.
 2022/04/15
