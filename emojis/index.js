@@ -13,7 +13,7 @@ const track_react = ({reaction, db}) => {
 		if (emojis.get(emoji_id)) {
 			update_database(db, guild.id, emojis, [emoji_id]);
 		}
-	});
+	})?.catch(e => logError(e));
 }
 
 const track_message = ({message, db}) => {
@@ -24,7 +24,7 @@ const track_message = ({message, db}) => {
 		if (tracked_emoji_ids.length > 0) {
 			update_database(db, guild.id, emojis, tracked_emoji_ids);
 		}
-	});
+	})?.catch(e => logError(e));
 }
 
 const update_database = (db, guild_id, guild_emojis, emoji_ids) => {
