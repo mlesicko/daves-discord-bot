@@ -12,6 +12,7 @@ const meme = require('./meme.js');
 const mute = require('./mute.js');
 const names = require('./names.js');
 const patchNotes = require('./patchNotes.js');
+const plates = require('./plates.js');
 const roll = require('./roll.js');
 const taboo = require('./taboo.js');
 const userStanding = require('./userStanding');
@@ -28,6 +29,7 @@ const slashCommandsArray = [
 	mute,
 	names,
 	patchNotes,
+	plates,
 	roll,
 	taboo,
 	...userStanding,
