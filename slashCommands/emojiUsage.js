@@ -9,8 +9,10 @@ const data = new SlashCommandBuilder()
 	.addStringOption(option =>
 		option.setName("report-type")
 			.setDescription("Type of emoji report to generate")
-			.addChoice("Most Recent", MOST_RECENT)
-			.addChoice("Most Popular", MOST_POPULAR)
+			.addChoices(
+				{ name: "Most Recent", value: MOST_RECENT },
+				{ name: "Most Popular", value: MOST_POPULAR }
+			)
 			.setRequired(false))
 	.toJSON();
 

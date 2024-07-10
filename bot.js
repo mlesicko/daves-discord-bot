@@ -1,4 +1,4 @@
-const { Client, Intents } = require('discord.js');
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const { JsonDB } = require('node-json-db');
 const { Config } = require('node-json-db/dist/lib/JsonDBConfig');
 const auth = require('./auth.json');
@@ -14,12 +14,15 @@ const {log, logError, withErrorLogging} = require('./errorLogging.js');
 //initialize Discord Bot
 const client = new Client({
 	intents: [
-		Intents.FLAGS.GUILDS,
-		Intents.FLAGS.GUILD_MESSAGES,
-		Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-		Intents.FLAGS.DIRECT_MESSAGES
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMessageReactions,
+		GatewayIntentBits.DirectMessages
 	],
-	partials: ['CHANNEL']
+	partials: [
+		Partials.Channel
+	]
 });
 const db = new JsonDB(new Config('data', true, true, '/'));
 

@@ -13,9 +13,11 @@ const data = new SlashCommandBuilder()
 	.addStringOption(option =>
 		option.setName("background")
 			.setDescription("The background to use for the meme.")
-			.addChoice("synthwave", "synthwave")
-			.addChoice("boomer post", "boomer_post")
-			.addChoice("space cowboy", "space_cowboy")
+			.addChoices(
+				{ name: "synthwave", value: "synthwave"},
+				{ name: "boomer post", value: "boomer_post"},
+				{ name: "space cowboy", value: "space_cowboy"}
+			)
 			.setRequired(false))
 	.toJSON();
 
@@ -119,7 +121,7 @@ const makeMeme = async (memeText, backgroundId, author) => {
 	context.arc(avatar_x + 50, avatar_y + 50, 50, 0, Math.PI * 2, true);
 	context.closePath();
 	context.clip();
-	const avatar = await Canvas.loadImage(author.displayAvatarURL({ format: "jpg" }));
+	const avatar = await Canvas.loadImage(author.displayAvatarURL({ extension: "jpg", size: 128 }));
 	context.drawImage(avatar, avatar_x, avatar_y, 100, 100);
 	context.restore()
 

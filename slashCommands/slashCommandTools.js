@@ -28,8 +28,10 @@ const with_transform = (command) =>
 	command.addStringOption(option =>
 		option.setName("transform")
 			.setDescription("A transformation to apply to the output")
-			.addChoice("mocking", "mocking")
-			.addChoice("uwu", "uwu")
+			.addChoices(
+				{ name: "mocking", value: "mocking"},
+				{ name: "uwu", value: "uwu"}
+			)
 			.setRequired(false))
 
 const apply_transform = (interaction, response) => {
