@@ -9,8 +9,10 @@ const data = new SlashCommandBuilder()
 	.addStringOption(option => 
 		option.setName("setting")
 			.setDescription("set mute on or off")
-			.addChoice("on", "on")
-			.addChoice("off", "off")
+			.addChoices(
+				{ name: "on", value: "on"},
+				{ name: "off", value: "off"}
+			)
 			.setRequired(true))
 	.toJSON();
 
