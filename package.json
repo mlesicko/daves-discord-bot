@@ -5,11 +5,11 @@
 	"main": "bot.js",
 	"author": "Logger",
 	"dependencies": {
-		"canvas": "^2.11.2",
-		"chrono-node": "^2.2.4",
-		"discord.js": "^14.15.3",
+		"canvas": "^3.0.1",
+		"chrono-node": "^2.7.7",
+		"discord.js": "^14.17.3",
 		"lodash": "^4.17.21",
-		"node-json-db": "^1.0.1"
+		"node-json-db": "^2.3.0"
 	},
 	"scripts": {
 		"start": "node bot.js"
