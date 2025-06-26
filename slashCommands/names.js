@@ -1,14 +1,16 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const { logError } = require('../errorLogging.js');
+const { with_silent, apply_silent } = require('./slashCommandTools');
 const { getRandInt } = require('../utils.js');
 
 const data = new SlashCommandBuilder()
 	.setName("name")
 	.setDescription("Important names")
-	.addSubcommand(subcommand => subcommand
-		.setName("random")
-		.setDescription("Get a random name"))
+	.addSubcommand(subcommand =>
+		with_silent(subcommand
+			.setName("random")
+			.setDescription("Get a random name")))
 	.addSubcommand(subcommand => subcommand
 		.setName("add")
 		.setDescription("Save an important name for later")
@@ -27,7 +29,7 @@ const run = ({interaction, db}) => {
 	} else if (subcommand === "add") {
 		response = add_name(name, db);
 	}
-	interaction.reply(response);
+	interaction.reply(apply_silent(interaction, response));
 }
 
 const add_name = (name, db) => {
