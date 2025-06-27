@@ -16,9 +16,9 @@ const data = new SlashCommandBuilder()
 			.setRequired(false))
 	.toJSON();
 
-const run = ({interaction, client, db}) => {
+const run = async ({interaction, client, db}) => {
 	const reportType = interaction.options.getString("report-type") ?? MOST_POPULAR;
-	const emojiData = getEmojiData(interaction.guildId, db);
+	const emojiData = await getEmojiData(interaction.guildId, db);
 
 	if (emojiData.length === 0) {
 		interaction.reply("No emoji data found");
@@ -32,9 +32,9 @@ const run = ({interaction, client, db}) => {
 	}
 }
 
-const getEmojiData = (guild, db) => {
+const getEmojiData = async (guild, db) => {
 	try {
-		const emojiObject = db.getData(`/emojis/${guild}`);
+		const emojiObject = await db.getData(`/emojis/${guild}`);
 		return Object.keys(emojiObject).map((key) => ({
 			id: key,
 			...emojiObject[key]

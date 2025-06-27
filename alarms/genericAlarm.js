@@ -11,9 +11,9 @@ const checkAlarm = ({client, db}) => {
 	alarmPaths.forEach((path) => checkAlarmsInPath(client, db, path));
 }
 
-const checkAlarmsInPath = (client, db, path) => {
+const checkAlarmsInPath = async (client, db, path) => {
 	const now = Date.now();
-	const alarmsObject = objectMap(getAlarms(db, path), (channel, alarms) => {
+	const alarmsObject = objectMap(await getAlarms(db, path), (channel, alarms) => {
 		const pendingAlarms = [];
 		alarms.forEach((alarm) => {
 			if (alarm.time <= now) {
@@ -27,8 +27,8 @@ const checkAlarmsInPath = (client, db, path) => {
 	updateAlarms(db, alarmsObject, path);
 }
 
-const getAlarms = (db, path) => {
-	return db.getData(path);
+const getAlarms = async (db, path) => {
+	return await db.getData(path);
 }
 
 const updateAlarms = (db, alarmsObject, path) => {

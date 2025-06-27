@@ -27,12 +27,12 @@ const track_message = ({message, db}) => {
 	})?.catch(e => logError(e));
 }
 
-const update_database = (db, guild_id, guild_emojis, emoji_ids) => {
+const update_database = async (db, guild_id, guild_emojis, emoji_ids) => {
 	const path = '/emojis/' + guild_id;
 	try {
 		// Prep the database in case this is the first time
 		db.push(path, {}, false);
-		const emoji_db = db.getData(path);
+		const emoji_db = await db.getData(path);
 		const updated_db = {};
 		for ([guild_emoji_id, guild_emoji] of guild_emojis) {
 			if (guild_emoji_id in emoji_db) {

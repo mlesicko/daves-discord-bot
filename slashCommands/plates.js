@@ -18,12 +18,12 @@ const data = new SlashCommandBuilder()
 				.setRequired(true)))
 	.toJSON();
 
-const run = ({interaction, db}) => {
+const run = async ({interaction, db}) => {
 	const plate = interaction.options.getString("plate");
 	const subcommand = interaction.options.getSubcommand();
 	let response = "Error handling request";
 	if (subcommand === "random") {
-		response = get_plate(db);
+		response = await get_plate(db);
 	} else if (subcommand === "add") {
 		response = add_plate(plate, db);
 	}
@@ -35,9 +35,9 @@ const add_plate = (plate, db) => {
 	return "Added plate: " + plate;
 }
 
-const get_plate = (db) => {
+const get_plate = async (db) => {
 	try {
-		const plates = db.getData('/plates');
+		const plates = await db.getData('/plates');
 		if (plates && plates.length > 0) {
 			const i = getRandInt(plates.length);
 			return plates[i];

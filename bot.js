@@ -31,22 +31,23 @@ const onReady = () => {
 	alarms.start({client, db});
 };
 
-const isMuted = () => {
+const isMuted = async () => {
 	try {
-		return db.getData('/muted');
+		const muted = await db.getData('/muted');
+		return muted;
 	} catch (e) {
 		return false;
 	}
 }
 
-const onMessage = (message) => {
+const onMessage = async (message) => {
 	if (message.author.id === client.user.id) {
 		return;
 	}
 	const state = new MessageActionState(client, message, db);
 	if (state.isCommand) {
 		commands(state);
-	} else if (!isMuted()){
+	} else if (!(await isMuted())){
 		responses(state);
 	}
 	emojis.track_message({db, message});

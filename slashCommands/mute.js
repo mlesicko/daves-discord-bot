@@ -16,21 +16,21 @@ const data = new SlashCommandBuilder()
 			.setRequired(true))
 	.toJSON();
 
-const run = ({interaction, db}) => {
+const run = async ({interaction, db}) => {
 	const setting = interaction.options.getString("setting");
 	let response = "";
 	if (setting === "on") {
-		response = mute(db);
+		response = await mute(db);
 	} else if (setting === "off") {
-		response = unmute(db);
+		response = await unmute(db);
 	} else {
 		response = "Error handling request";
 	}
 	interaction.reply(response);
 }
 
-const mute = (db) => {
-	if (get_mute(db)) {
+const mute = async (db) => {
+	if (await get_mute(db)) {
 		return "I was already muted.";
 	} else {
 		set_mute(db, true);
@@ -38,8 +38,8 @@ const mute = (db) => {
 	}
 }
 
-const unmute = (db) => {
-	if (get_mute(db)) {
+const unmute = async (db) => {
+	if (await get_mute(db)) {
 		set_mute(db, false);
 		return "I'm here!";
 	} else {
@@ -47,9 +47,9 @@ const unmute = (db) => {
 	}
 }
 
-const get_mute = (db) => {
+const get_mute = async (db) => {
 	try {
-		return db.getData('/muted');
+		return await db.getData('/muted');
 	} catch (e) {
 		return false;
 	}

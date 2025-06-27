@@ -32,18 +32,18 @@ const data = new SlashCommandBuilder()
 					.setRequired(false))))
 	.toJSON();
 
-const run = ({interaction, db}) => {
+const run = async ({interaction, db}) => {
 	const subcommand = interaction.options.getSubcommand();
 	let response;
 	if (subcommand === "report") {
 		const description = interaction.options.getString("description");
 		response = report_bug(db, description);
 	} else if (subcommand === "list") {
-		response = list_bugs(db);
+		response = await list_bugs(db);
 	} else if (subcommand === "resolve") {
 		const index = interaction.options.getInteger("index");
 		const resolution = interaction.options.getString("resolution");
-		response = resolve_bug(db, index, resolution);
+		response = await resolve_bug(db, index, resolution);
 	} else {
 		response = "Error handling request";
 	}
@@ -55,9 +55,9 @@ const report_bug = (db, description) => {
 	return `Reported bug: \`${description}\``;
 }
 
-const list_bugs = (db) => {
+const list_bugs = async (db) => {
 	try {
-		const bugs = db.getData("/bugs");
+		const bugs = await db.getData("/bugs");
 		if (bugs && bugs.length > 0) {
 			return bugs.map((bug, idx) => `${idx + 1}. ${bug}`).join("\n");
 		} else {
@@ -69,8 +69,8 @@ const list_bugs = (db) => {
 	}
 }
 
-const resolve_bug = (db, index, resolution) => {
-	const bugs = db.getData("/bugs");
+const resolve_bug = async (db, index, resolution) => {
+	const bugs = await db.getData("/bugs");
 	if (index >= 1 && index <= bugs.length) {
 		const removed_bug = bugs[index - 1]
 		const updated_bugs = [...bugs.slice(0, index - 1), ...bugs.slice(index)]

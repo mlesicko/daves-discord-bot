@@ -20,12 +20,12 @@ const data = new SlashCommandBuilder()
 				.setRequired(true)))
 	.toJSON();
 
-const run = ({interaction, db}) => {
+const run = async ({interaction, db}) => {
 	const name = interaction.options.getString("name");
 	const subcommand = interaction.options.getSubcommand();
 	let response = "Error handling request";
 	if (subcommand === "random") {
-		response = get_name(db);
+		response = await get_name(db);
 	} else if (subcommand === "add") {
 		response = add_name(name, db);
 	}
@@ -37,9 +37,9 @@ const add_name = (name, db) => {
 	return "Added name: " + name;
 }
 
-const get_name = (db) => {
+const get_name = async (db) => {
 	try {
-		const names = db.getData('/names');
+		const names = await db.getData('/names');
 		if (names && names.length > 0) {
 			const i = getRandInt(names.length);
 			return names[i];

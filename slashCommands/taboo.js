@@ -24,26 +24,26 @@ const data = new SlashCommandBuilder()
 				.setRequired(true)))
 	.toJSON();
 
-const run = ({interaction, db}) => {
+const run = async ({interaction, db}) => {
 	const channel_id = interaction.channelId;
 	const taboo = interaction.options.getString("taboo")?.toLowerCase();
 	const subcommand = interaction.options.getSubcommand();
 	let response;
 	if (subcommand === "list") {
-		response = list_taboos(db, channel_id);
+		response = await list_taboos(db, channel_id);
 	} else if (subcommand === "add") {
 		response = add_taboo(db, taboo, channel_id);
 	} else if (subcommand === "remove") {
-		response = remove_taboo(db, taboo, channel_id);
+		response = await remove_taboo(db, taboo, channel_id);
 	} else {
 		response = "Error handling request";
 	}
 	interaction.reply(response);
 }
 
-const list_taboos = (db, channel_id) => {
+const list_taboos = async (db, channel_id) => {
 	try {
-		const taboo_words = db.getData("/taboo/" + channel_id);
+		const taboo_words = await db.getData("/taboo/" + channel_id);
 		if (taboo_words.length === 0) {
 			return "No words are currently taboo in this channel.";
 		} else {
@@ -65,9 +65,9 @@ const add_taboo = (db, taboo, channel_id) => {
 	}
 }
 
-const remove_taboo = (db, taboo, channel_id) => {
+const remove_taboo = async (db, taboo, channel_id) => {
     try {
-        const taboo_words = db.getData("/taboo/" + channel_id);
+        const taboo_words = await db.getData("/taboo/" + channel_id);
 		if (taboo_words.includes(taboo)) {
 			db.push("/taboo/" + channel_id,
 				taboo_words.filter(word => word !== taboo),
