@@ -38,7 +38,7 @@ const data = new SlashCommandBuilder()
 				.setDescription("What channel to delete an event from")))
 	.toJSON();
 
-const run = ({interaction, db}) => {
+const run = async ({interaction, db}) => {
 	const channel = interaction.options.getChannel("channel");
 	const channelId = channel?.id ?? interaction.channelId;
 	const eventInfo = interaction.options.getString("event");
@@ -47,21 +47,21 @@ const run = ({interaction, db}) => {
 	const subcommand = interaction.options.getSubcommand();
 	let response = "Error handling request";
 	if (subcommand === "list") {
-		response = listEvents(channelId, db);
+		response = await listEvents(channelId, db);
 	} else if (subcommand === "add") {
 		response = addEvent(eventInfo, date, channelId, db);
 	} else if (subcommand === "delete") {
-		response = deleteEvent(eventIndex, channelId, db);
+		response = await deleteEvent(eventIndex, channelId, db);
 	}
 	interaction.reply(response);
 }
 
-const listEvents = (channelId, db) => {
-	const events = getEvents(channelId, db);
+const listEvents = async (channelId, db) => {
+	const events = await getEvents(channelId, db);
 	if (events.length === 0) {
 		return "No upcoming events.";
 	} else {
-		const message = getEvents(channelId, db)
+		const message = events
 			.map((e, idx) => 
 				`${idx + 1}. ` +
 				`${e.message} ` +
@@ -93,8 +93,8 @@ const addEvent = (eventInfo, date, channelId, db) => {
 	}
 }
 
-const deleteEvent = (eventIndex, channelId, db) => {
-	const events = getEvents(channelId, db);
+const deleteEvent = async (eventIndex, channelId, db) => {
+	const events = await getEvents(channelId, db);
 	if (eventIndex > 0 && eventIndex <= events.length) {
 		const deletedEvent = events.splice(eventIndex - 1, 1)[0];
 		db.push('/events/' + channelId, events, true);
@@ -104,10 +104,10 @@ const deleteEvent = (eventIndex, channelId, db) => {
 	}
 }
 
-const getEvents = (channelId, db) => {
+const getEvents = async (channelId, db) => {
 	try {
-		return db.getData('/events/' + channelId)
-			.sort((e1, e2) => e1.time - e2.time);
+		const events = await db.getData('/events/' + channelId);
+		return events?.sort((e1, e2) => e1.time - e2.time) ?? [];
 	} catch (e) {
 		logError(e);
 		return [];

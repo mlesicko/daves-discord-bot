@@ -1,5 +1,5 @@
-const run = ({message, react, db}) => {
-	const memeChannels = getMemeChannels(db);
+const run = async ({message, react, db}) => {
+	const memeChannels = await getMemeChannels(db);
 	const channelId = message.channel.id;
 	if (memeChannels.includes(channelId) && isMeme(message)) {
 		react('😆');
@@ -7,9 +7,9 @@ const run = ({message, react, db}) => {
 	return false;
 }
 
-const getMemeChannels = (db) => {
+const getMemeChannels = async (db) => {
 	try {
-		return db.getData('/memeChannels');
+		return await db.getData('/memeChannels');
 	} catch (e) {
 		return [];
 	}

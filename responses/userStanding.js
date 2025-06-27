@@ -1,9 +1,9 @@
 const { logError } = require('../errorLogging.js');
 
-const run = ({react, sendMessage, message, db}) => {
+const run = async ({react, sendMessage, message, db}) => {
 	const userId = message.author.id;
 	const channelId = message.channel.id;
-	const userStanding = getUserStanding(channelId, userId, db);
+	const userStanding = await getUserStanding(channelId, userId, db);
 	if (userStanding > 0) {
 		praise(sendMessage, react, message.author.username);
 		return true;
@@ -50,9 +50,9 @@ const praise = (sendMessage, react, username) => {
 	responses[getRandInt(responses.length)]();
 }
 		
-const getUserStanding = (channelId, userId, db) => {
+const getUserStanding = async (channelId, userId, db) => {
 	try {
-		const standing = db.getData('/user_standing');
+		const standing = await db.getData('/user_standing');
 		return standing?.[channelId]?.[userId] ?? 0;
 	} catch (e) {
 		return 0;

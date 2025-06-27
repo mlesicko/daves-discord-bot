@@ -32,7 +32,7 @@ const data = new SlashCommandBuilder()
 				.setRequired(true)))
 	.toJSON();
 
-const run = ({interaction, db}) => {
+const run = async ({interaction, db}) => {
 	const subcommand = interaction.options.getSubcommand();
 	let response;
 	if (subcommand === "create") {
@@ -40,10 +40,10 @@ const run = ({interaction, db}) => {
 		const content = interaction.options.getString("content");
 		response = create_macro(db, name, content);
 	} else if (subcommand === "list") {
-		response = list_macros(db);
+		response = await list_macros(db);
 	} else if (subcommand === "delete") {
 		const name = interaction.options.getString("name");
-		response = delete_macro(db, name);
+		response = await delete_macro(db, name);
 	} else {
 		response = "Error handling request";
 	}
@@ -61,9 +61,9 @@ const create_macro = (db, name, content) => {
 	return `Created macro:\n${macro}: ${content}`;
 }
 
-const list_macros = (db) => {
+const list_macros = async (db) => {
 	try {
-		const macros = db.getData("/macros");
+		const macros = await db.getData("/macros");
 		const macro_names = Object.keys(macros);
 		if (macro_names.length > 0) {
 			return macro_names.join("\n");
@@ -76,10 +76,10 @@ const list_macros = (db) => {
 	}
 }
 
-const delete_macro = (db, name) => {
+const delete_macro = async (db, name) => {
 	const macro = ensure_bang(name);
 	try {
-		const macros = db.getData("/macros");
+		const macros = await db.getData("/macros");
 		if (macro in macros) {
 			delete macros[macro];
 			db.push("/macros", macros, true);

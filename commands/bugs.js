@@ -56,9 +56,9 @@ const reportBug = (bug, sendMessage, db, message='Added bug') => {
 	sendMessage(`${message}: ${bug}`);
 }
 
-const listBugs = (sendMessage, db) => {
+const listBugs = async (sendMessage, db) => {
 	try {
-		const bugs = db.getData('/bugs');
+		const bugs = await db.getData('/bugs');
 		if (bugs && bugs.length > 0) {
 			sendMessage(bugs.map((bug, idx) => `${idx +1}. ${bug}`).join('\n'));
 		} else {
@@ -70,8 +70,8 @@ const listBugs = (sendMessage, db) => {
 	}
 }
 
-const deleteBugs = (sendMessage, db, toDelete) => {
-	const bugs = db.getData('/bugs');
+const deleteBugs = async (sendMessage, db, toDelete) => {
+	const bugs = await db.getData('/bugs');
 	let errorFlag = false;
 	toDelete.forEach((deleteIndex) => {
 		if (bugs[deleteIndex - 1] != undefined) {

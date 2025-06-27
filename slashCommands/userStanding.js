@@ -20,26 +20,26 @@ const praise_data = new SlashCommandBuilder()
 			.setRequired(true))
 	.toJSON();
 
-const shame_run = ({interaction, db}) => {
+const shame_run = async ({interaction, db}) => {
 	const channel_id = interaction.channelId;
 	const user = interaction.options.getUser("user");
-	interaction.reply(adjust_standing(db, user, channel_id, -1));
+	interaction.reply(await adjust_standing(db, user, channel_id, -1));
 }
 
-const praise_run = ({interaction, db}) => {
+const praise_run = async ({interaction, db}) => {
 	const channel_id = interaction.channelId;
 	const user = interaction.options.getUser("user");
-	interaction.reply(adjust_standing(db, user, channel_id, 1));
+	interaction.reply(await adjust_standing(db, user, channel_id, 1));
 }
 
-const adjust_standing = (db, user, channel_id, delta) => {
+const adjust_standing = async (db, user, channel_id, delta) => {
 	const success_responses = {
 		[-1]: `${user.username} is shamed.`,
 		[0]: `${user.username} has been reset to normal.`,
 		[1]: `${user.username} is praised.`
 	};
 	try {
-		const standing = db.getData("/user_standing/");
+		const standing = await db.getData("/user_standing/");
 		const current_user_standing = standing?.[channel_id]?.[user.id];
 		if (current_user_standing) {
 			const adjusted_standing = current_user_standing + delta;

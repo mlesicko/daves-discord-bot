@@ -1,8 +1,8 @@
 const { logError } = require('../errorLogging.js');
 
-const run = ({sendMessage, message, messageText, db}) => {
+const run = async ({sendMessage, message, messageText, db}) => {
 	const channelId = message.channel.id;
-	const tabooWords = findTabooWords(messageText, channelId, db);
+	const tabooWords = await findTabooWords(messageText, channelId, db);
 	if (tabooWords.length) {
 		makeTabooResponse(sendMessage, tabooWords);
 		return true;
@@ -31,8 +31,8 @@ const makeWordList = (words) => {
 	}
 }
 		
-const findTabooWords = (messageText, channelId, db) => {
-	const tabooWords = getTabooWords(channelId, db);
+const findTabooWords = async (messageText, channelId, db) => {
+	const tabooWords = await getTabooWords(channelId, db);
 	const messageWords = messageText.split(' ');
 	return messageWords.filter(word =>
 		tabooWords.some(tabooWord => 
@@ -41,9 +41,9 @@ const findTabooWords = (messageText, channelId, db) => {
 	);
 }
 
-const getTabooWords = (channelId, db) => {
+const getTabooWords = async (channelId, db) => {
 	try {
-		return db.getData('/taboo/' + channelId);
+		return await db.getData('/taboo/' + channelId);
 	} catch (e) {
 		return [];
 	}

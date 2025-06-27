@@ -1,3 +1,5 @@
+const { MessageFlags } = require('discord.js');
+
 const with_silent = (command) => 
 	command.addBooleanOption(option =>
 		option.setName("silent")
@@ -6,21 +8,20 @@ const with_silent = (command) =>
 
 const apply_silent = (interaction, response) => {
 	const silent = !!(interaction.options.getBoolean("silent"));
-	if (typeof(response) === "object" && "ephemeral" in response) {
-		return {
-			...response,
-			ephemeral: response.ephemeral || silent
-		};
-	} else if (typeof(response) === "object") {
-		return {
-			...response,
-			ephemeral: silent
-		};
+	if (silent) {
+		if (typeof(response) === "object") {
+			return {
+				...response,
+				flags: (response.flags ?? 0) | MessageFlags.Ephemeral
+			};
+		} else {
+			return {
+				content: response,
+				flags: MessageFlags.Ephemeral
+			};
+		}
 	} else {
-		return {
-			content: response,
-			ephemeral: silent
-		};
+		return response;
 	}
 }
 

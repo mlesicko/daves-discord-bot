@@ -1,15 +1,15 @@
-const run = ({db, messageText, sendMessage}) => {
+const run = async ({db, messageText, sendMessage}) => {
 	const trimmed = messageText.trim();
 	return isPossibleMacro(trimmed) ?
-		resolveMacro(db, trimmed, sendMessage) :
+		await resolveMacro(db, trimmed, sendMessage) :
 		false;
 }
 
 const isPossibleMacro = (s) => s.length > 0 && s[0] === '!' && !s.includes(' ');
 
-const resolveMacro = (db, macro, sendMessage) => {
+const resolveMacro = async (db, macro, sendMessage) => {
 	try {
-		sendMessage(db.getData(`/macros/${macro}`));
+		sendMessage(await db.getData(`/macros/${macro}`));
 		return true;
 	} catch (e) {
 		return false;

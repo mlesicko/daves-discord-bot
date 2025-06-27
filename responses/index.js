@@ -32,10 +32,12 @@ const commandArray = [
 	enjoyMeme
 ];
 
-const run = (state) => {
-	commandArray.find(
-		(f) => f(state)
-	);
+const run = async (state) => {
+	for (const command of commandArray) {
+		if (await command(state)) {
+			return;
+		}
+	}
 }
 
 module.exports=run;
