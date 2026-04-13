@@ -87,7 +87,7 @@ const onInteraction = (interaction) => {
 	}
 }
 
-client.on('ready', withErrorLogging(onReady));
+client.on('clientReady', withErrorLogging(onReady));
 client.on('messageCreate', withErrorLogging(onMessage));
 client.on('messageUpdate', withErrorLogging(onMessageUpdate));
 client.on('messageReactionAdd', withErrorLogging(onReaction));

@@ -1,3 +1,4 @@
+const { MessageFlags } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const { with_transform, apply_transform } = require('./slashCommandTools.js');
@@ -18,7 +19,10 @@ const data =
 	.toJSON();
 
 const run = ({interaction}) => {
-	interaction.reply({ content: "I will lend you my voice.", ephemeral: true });
+	interaction.reply({
+		content: "I will lend you my voice.",
+		flags: MessageFlags.Ephemeral
+	});
 
 	const channel = interaction.options.getChannel("channel");
 	const text = interaction.options.getString("text");
