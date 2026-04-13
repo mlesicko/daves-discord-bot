@@ -1,3 +1,4 @@
+const { MessageFlags } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Canvas = require('canvas');
 
@@ -82,7 +83,10 @@ const defaultTextConfig = {
 const run = ({ interaction }) => {
 	const text = interaction.options.getString("text");
 	const backgroundId = interaction.options.getString("background");
-	interaction.reply({ content: "Generating meme...", ephemeral: true });
+	interaction.reply({
+		content: "Generating meme...",
+		flags: MessageFlags.Ephemeral
+	});
 	makeMeme(text, backgroundId, interaction.user)
 		.then(meme => interaction.channel.send({files: [{attachment: meme}]}))
 		.catch(e => console.log(e));
