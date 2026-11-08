@@ -17,7 +17,7 @@ const data = new SlashCommandBuilder()
 
 const run = ({interaction}) => {
 	const count = interaction.options.getInteger("count") ?? 1;
-	const sides = interaction.options.getInteger("sides") ?? 6;
+	const sides = interaction.options.getInteger("sides") ?? 20;
 	interaction.reply(rollDice(count, sides));
 }
 
